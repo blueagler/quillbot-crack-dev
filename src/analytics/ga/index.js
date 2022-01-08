@@ -1,5 +1,6 @@
-import { install } from './gtag';
+import { initialize, pageview } from 'react-ga';
 
 export async function init() {
-  install('G-H635ES4QGW');
+  initialize('G-H635ES4QGW');
+  pageview(window.location.pathname + window.location.search);
 }

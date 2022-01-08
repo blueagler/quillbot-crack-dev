@@ -14,37 +14,37 @@ export const requestHookList = [
   {
     match: /api\/utils\/sentence-spiltter/,
     async captureFunc(config) {
-      // sentEvent('paraphrase', config.body);
+      sentEvent('paraphrase', config.body);
     }
   },
   {
     match: /api\/utils\/grammar-check/,
     async captureFunc(config) {
-      // sentEvent('grammar-check', config.body);
+      sentEvent('grammar-check', config.body);
     }
   },
   {
     match: /api\/summarizer\/summarize-para\/abs/,
     async captureFunc(config) {
-      // sentEvent('summarize-paragraph', config.body);
+      sentEvent('summarize-paragraph', config.body);
     }
   },
   {
     match: /api\/summarizer\/summarize-para\/ext/,
     async captureFunc(config) {
-      // sentEvent('summarize-key-sentences', config.body);
+      sentEvent('summarize-key-sentences', config.body);
     }
   },
   {
     match: /api\/utils\/bib-search/,
     async captureFunc(config) {
-      // sentEvent('bib-search', config.body);
+      sentEvent('bib-search', config.body);
     }
   },
   {
     match: /api\/write-assist\/create-project/,
     async captureFunc(config) {
-      // sentEvent('create-project', config.body);
+      sentEvent('create-project', config.body);
     }
   },
 ];
@@ -57,7 +57,7 @@ export const responseHookList = [
 
       r.data.profile.premium = true;
 
-      // notify(message.hookPremium.success, 'success');
+      notify(message.hookPremium.success, 'success');
       return JSON.stringify(r)
     }
   },
@@ -66,24 +66,24 @@ export const responseHookList = [
     async captureFunc(r) {
       const rr = JSON.parse(r);
       if (rr.code === "SESSION_FAILED") {
-        // dialog({
-        //   content: message.sessionExpired.content,
-        //   actions: [
-        //     {
-        //       label: message.sessionExpired.no,
-        //       onClick: () => { },
-        //     },
-        //     {
-        //       label: message.sessionExpired.yes,
-        //       onClick: () => {
-        //         indexedDB.databases()
-        //           .then(dbs => dbs.filter(db => db.name.startsWith('firebase')).forEach(db => indexedDB.deleteDatabase(db.name)))
-        //           .then(() => window.location.href = `/login?returnUrl=${window.location.pathname}`)
-        //           // .catch(() => notify(message.error.logOut), 'error');
-        //       },
-        //     }
-        //   ]
-        // })
+        dialog({
+          content: message.sessionExpired.content,
+          actions: [
+            {
+              label: message.sessionExpired.no,
+              onClick: () => { },
+            },
+            {
+              label: message.sessionExpired.yes,
+              onClick: () => {
+                indexedDB.databases()
+                  .then(dbs => dbs.filter(db => db.name.startsWith('firebase')).forEach(db => indexedDB.deleteDatabase(db.name)))
+                  .then(() => window.location.href = `/login?returnUrl=${window.location.pathname}`)
+                // .catch(() => notify(message.error.logOut), 'error');
+              },
+            }
+          ]
+        })
       };
 
     }
@@ -94,7 +94,7 @@ export const responseHookList = [
       const rr = JSON.parse(r);
 
       if (rr.code === "COM_OK") {
-        // sentEvent('list-projects', { ...rr.data })
+        sentEvent('list-projects', { ...rr.data })
       }
 
     }
@@ -105,7 +105,7 @@ export const responseHookList = [
       const rr = JSON.parse(r);
 
       if (rr.code === "COM_OK") {
-        // sentEvent('restore-projects', rr.data)
+        sentEvent('restore-projects', rr.data)
       }
 
     }
