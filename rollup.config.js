@@ -5,6 +5,8 @@ import alias from '@rollup/plugin-alias';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
+import postcss from 'rollup-plugin-postcss';
+import cssnano from 'cssnano';
 
 export default defineConfig({
   input: "./src/app.js",
@@ -13,6 +15,24 @@ export default defineConfig({
     format: "iife"
   },
   plugins: [
+    alias({
+      resolve: ['.js'],
+      entries: {
+        src: __dirname + '/src',
+        analytics: __dirname + '/src/analytics',
+        check: __dirname + '/src/check',
+        hook: __dirname + '/src/hook',
+        inject: __dirname + '/src/inject',
+        notification: __dirname + '/src/notification',
+        message: __dirname + '/src/message',
+        store: __dirname + '/src/store',
+        utils: __dirname + '/src/utils',
+        react: 'preact/compat',
+        'react-dom/test-utils': 'preact/test-utils',
+        'react-dom': 'preact/compat',
+        'react/jsx-runtime': 'preact/jsx-runtime',
+      }
+    }),
     replace({
       preventAssignment: true,
       'process.env.NODE_ENV': JSON.stringify('production')
@@ -27,34 +47,24 @@ export default defineConfig({
           }
         ]
       ],
+      "plugins": [
+        ["@emotion/babel-plugin", {}]
+      ],
       babelHelpers: 'bundled',
+    }),
+    postcss({
       plugins: [
-        [
-          "@emotion",
-          {
-            "cssPropOptimization": true
-          }
-        ]
+        cssnano({
+          preset: ['default', {
+            discardComments: {
+              removeAll: true,
+            },
+          }]
+        })
       ]
     }),
     commonjs(),
     nodeResolve(),
-    alias({
-      resolve: ['.js'],
-      entries: {
-        src: __dirname + '/src',
-        analytics: __dirname + '/src/analytics',
-        check: __dirname + '/src/check',
-        hook: __dirname + '/src/hook',
-        inject: __dirname + '/src/inject',
-        notification: __dirname + '/src/notification',
-        message: __dirname + '/src/message',
-        store: __dirname + '/src/store',
-        utils: __dirname + '/src/utils',
-        react: 'preact/compat',
-        'react-dom': 'preact/compat',
-      }
-    }),
     terser({
       compress: {
         ecma: 6

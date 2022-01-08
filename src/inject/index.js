@@ -11,9 +11,9 @@ function Inject() {
     <Provider store={store}>
       <SnackbarProvider>
         <Snackbar />
-        <Support />
-        <Dialog />
       </SnackbarProvider>
+      <Support />
+      <Dialog />
     </Provider>
   )
 }
