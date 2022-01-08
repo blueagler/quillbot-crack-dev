@@ -21,9 +21,12 @@ function Inject() {
   )
 }
 
-async function inject() {
+export default async function () {
   const injectDomContainer = document.createElement('div');
   render(<Inject />, injectDomContainer);
-  document.body.appendChild(injectDomContainer);
+  if (document.body) {
+    document.body.appendChild(injectDomContainer);
+  } else {
+    window.addEventListener('DOMContentLoaded', () => document.body.appendChild(injectDomContainer));
+  }
 }
-export default inject;
