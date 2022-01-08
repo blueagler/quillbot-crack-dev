@@ -19,7 +19,14 @@ export default defineConfig({
     }),
     babel({
       exclude: 'node_modules/**',
-      presets: ['@babel/preset-react'],
+      presets: [
+        ['@babel/preset-react',
+          {
+            "pragma": "h",
+            "pragmaFrag": "Fragment",
+          }
+        ]
+      ],
       babelHelpers: 'bundled',
       plugins: [
         [

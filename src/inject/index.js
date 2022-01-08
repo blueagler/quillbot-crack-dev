@@ -1,5 +1,4 @@
-import { render } from 'react-dom';
-import React, { Fragment } from 'react';
+import { render, h } from 'preact';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
 import store from 'store';
@@ -9,15 +8,13 @@ import Snackbar from './snackbar';
 
 function Inject() {
   return (
-    <Fragment>
-      <Provider store={store}>
-        <SnackbarProvider>
-          <Snackbar />
-          <Support />
-          <Dialog />
-        </SnackbarProvider>
-      </Provider>
-    </Fragment>
+    <Provider store={store}>
+      <SnackbarProvider>
+        <Snackbar />
+        <Support />
+        <Dialog />
+      </SnackbarProvider>
+    </Provider>
   )
 }
 

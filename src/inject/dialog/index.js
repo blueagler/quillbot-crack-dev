@@ -1,4 +1,4 @@
-import React from 'react';
+import { h } from 'preact';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { closeDialog } from 'store/dialog/action';

@@ -1,5 +1,5 @@
 import { message } from "message";
-import React from 'react';
+import { h } from 'preact';
 import styled from '@emotion/styled';
 
 export default function () {

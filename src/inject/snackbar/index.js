@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import { h } from 'preact';
+import { useEffect } from 'preact/hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { removeSnackbar } from 'store/snackbar/action';
