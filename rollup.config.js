@@ -44,6 +44,8 @@ export default defineConfig({
         message: __dirname + '/src/message',
         store: __dirname + '/src/store',
         utils: __dirname + '/src/utils',
+        react: 'preact/compat',
+        'react-dom': 'preact/compat',
       }
     }),
     terser({

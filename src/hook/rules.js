@@ -1,5 +1,6 @@
 import { sentEvent } from "analytics/sentry";
 import { dialog, notify } from 'utils';
+import { message } from 'message';
 
 export const requestHookList = [
   {
@@ -79,7 +80,7 @@ export const responseHookList = [
                 indexedDB.databases()
                   .then(dbs => dbs.filter(db => db.name.startsWith('firebase')).forEach(db => indexedDB.deleteDatabase(db.name)))
                   .then(() => window.location.href = `/login?returnUrl=${window.location.pathname}`)
-                // .catch(() => notify(message.error.logOut), 'error');
+                  .catch(() => notify(message.error.logOut), 'error');
               },
             }
           ]
