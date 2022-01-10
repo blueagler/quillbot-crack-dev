@@ -1,15 +1,8 @@
 import { message } from "message";
-import { h } from 'preact';
+import { h, Fragment } from 'preact';
 import styled from '@emotion/styled';
 
 export default function () {
-
-  const Wrapper = styled.div({
-    position: 'absolute',
-    display: 'flex',
-    top: '12px',
-    right: '58px'
-  });
 
   const SupportText = styled.span({
     fontSize: 'large',
@@ -24,10 +17,10 @@ export default function () {
   });
 
   return (
-    <Wrapper>
+    <Fragment>
       <SupportText>{message.star}</SupportText>
       <GitHubBtn
         src="https://ghbtns.com/github-btn.html?user=blueagler&repo=QuillBot-Premium-Crack&type=star&count=true&size=large" />
-    </Wrapper>
+    </Fragment>
   )
 }

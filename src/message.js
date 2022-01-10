@@ -16,5 +16,10 @@ export const message = {
   hookPremium: {
     success: 'Premium Hooked!',
   },
+  setting: {
+    title: 'QuillBot Premium Crack Setting',
+    save: 'Save Changes',
+    cancel: 'Cancel',
+  },
   star: 'Give a ',
 }

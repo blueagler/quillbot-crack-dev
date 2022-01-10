@@ -1,6 +1,6 @@
-import { initialize, pageview } from 'react-ga';
+import ReactGA from "react-ga4";
 
 export async function init() {
-  initialize('G-H635ES4QGW');
-  pageview(window.location.pathname + window.location.search);
+  ReactGA.initialize('G-H635ES4QGW');
+  ReactGA.send("pageview");
 }

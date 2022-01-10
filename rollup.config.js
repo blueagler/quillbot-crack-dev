@@ -7,6 +7,8 @@ import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
 import postcss from 'rollup-plugin-postcss';
 import cssnano from 'cssnano';
+import summary from 'rollup-plugin-summary';
+import progress from 'rollup-plugin-progress';
 
 export default defineConfig({
   input: "./src/app.js",
@@ -72,6 +74,8 @@ export default defineConfig({
       output: {
         comments: false
       }
-    })
+    }),
+    summary(),
+    progress()
   ]
 })

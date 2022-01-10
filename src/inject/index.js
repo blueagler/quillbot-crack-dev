@@ -2,7 +2,7 @@ import { render, h } from 'preact';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
 import store from 'store';
-import Support from './support';
+import Banner from './banner';
 import Dialog from './dialog';
 import Snackbar from './snackbar';
 
@@ -12,7 +12,7 @@ function Inject() {
       <SnackbarProvider>
         <Snackbar />
       </SnackbarProvider>
-      <Support />
+      <Banner />
       <Dialog />
     </Provider>
   )
