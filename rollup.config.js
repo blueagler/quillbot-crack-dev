@@ -5,8 +5,6 @@ import alias from '@rollup/plugin-alias';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
-import postcss from 'rollup-plugin-postcss';
-import cssnano from 'cssnano';
 import summary from 'rollup-plugin-summary';
 import progress from 'rollup-plugin-progress';
 
@@ -53,17 +51,6 @@ export default defineConfig({
         ["@emotion/babel-plugin", {}]
       ],
       babelHelpers: 'bundled',
-    }),
-    postcss({
-      plugins: [
-        cssnano({
-          preset: ['default', {
-            discardComments: {
-              removeAll: true,
-            },
-          }]
-        })
-      ]
     }),
     commonjs(),
     nodeResolve(),

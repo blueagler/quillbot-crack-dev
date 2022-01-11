@@ -5,6 +5,7 @@ import store from 'store';
 import Banner from './banner';
 import Dialog from './dialog';
 import Snackbar from './snackbar';
+import ModifyStyle from './modifyStyle'
 
 function Inject() {
   return (
@@ -12,6 +13,7 @@ function Inject() {
       <SnackbarProvider>
         <Snackbar />
       </SnackbarProvider>
+      <ModifyStyle />
       <Banner />
       <Dialog />
     </Provider>

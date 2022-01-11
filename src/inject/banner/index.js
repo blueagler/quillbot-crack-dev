@@ -1,11 +1,11 @@
 import { h } from 'preact';
-import styled from '@emotion/styled';
+import { styled } from '@mui/material/styles';
 import Support from "./support";
 import Setting from "./setting";
 
 export default function () {
 
-  const Wrapper = styled.div({
+  const Wrapper = styled('div')({
     position: 'absolute',
     display: 'flex',
     top: '0',
@@ -17,7 +17,7 @@ export default function () {
 
 
   return (
-    <Wrapper>
+    <Wrapper className='mui-fixed'>
       <Support />
       <Setting />
     </Wrapper>
