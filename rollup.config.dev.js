@@ -1,6 +1,5 @@
 import { defineConfig } from 'rollup'
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import { terser } from 'rollup-plugin-terser';
 import alias from '@rollup/plugin-alias';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
@@ -14,7 +13,6 @@ export default defineConfig({
     file: "./dist/quillbot.js",
     format: "iife"
   },
-  treeshake: 'smallest',
   plugins: [
     alias({
       resolve: ['.js'],
@@ -28,7 +26,7 @@ export default defineConfig({
     }),
     replace({
       preventAssignment: true,
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': JSON.stringify('development')
     }),
     babel({
       exclude: 'node_modules/**',
@@ -47,14 +45,6 @@ export default defineConfig({
     }),
     commonjs(),
     nodeResolve(),
-    terser({
-      compress: {
-        ecma: 6
-      },
-      output: {
-        comments: false
-      }
-    }),
     summary(),
     progress()
   ]
