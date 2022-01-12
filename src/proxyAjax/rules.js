@@ -1,6 +1,7 @@
-import { sentEvent } from "analytics/sentry";
-import { dialog, notify } from 'utils';
-import { message } from 'message';
+import { sentEvent } from "../analytic/sentry";
+import { dialog, notify } from '../utils';
+import { message } from '../message';
+import { getConfig } from '../config';
 
 export const requestHookList = [
   {
@@ -56,9 +57,16 @@ export const responseHookList = [
     overrideFunc(r) {
       r = JSON.parse(r);
 
-      r.data.profile.premium = true;
+      const hookEnabled = () => getConfig.find(({ id }) => id === 'hook-premium').enabled;
 
-      notify(message.hookPremium.success, 'success');
+      if (!r.data.profile.premium) {
+        notify(hookEnabled ? message.hookPremium.success : message.hookPremium.disabled, hookEnabled ? 'success' : 'warning');
+      }
+
+      if (hookEnabled) {
+        r.data.profile.premium = true;
+      }
+
       return JSON.stringify(r)
     }
   },

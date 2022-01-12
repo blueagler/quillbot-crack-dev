@@ -1,4 +1,4 @@
-import { message } from "message";
+import { message } from "../message";
 import { h, Fragment } from 'preact';
 import { styled } from '@mui/material/styles';
 

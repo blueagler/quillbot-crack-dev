@@ -1,10 +1,13 @@
 import { h, Fragment } from 'preact';
+import { useConfig } from '../config';
 import GlobalStyles from '@mui/material/GlobalStyles';
 
 export default function () {
 
-  const FullEditor = <GlobalStyles styles={
-    {
+  const [config] = useConfig();
+
+  const styleList = {
+    'full-editor': {
       '.mid-container': {
         maxWidth: '95% !important'
       },
@@ -21,11 +24,17 @@ export default function () {
         minHeight: 'calc(85vh)'
       }
     }
-  } />;
+  };
 
   return (
     <Fragment>
-      {FullEditor}
+      {
+        Object.keys(styleList)
+          .filter(key =>
+            config.find(item => item.id === key && item.enabled)
+          )
+          .map(key => <GlobalStyles styles={styleList[key]} />)
+      }
     </Fragment>
   )
 }

@@ -14,19 +14,12 @@ export default defineConfig({
     file: "./dist/quillbot.js",
     format: "iife"
   },
+  treeshake: 'smallest',
   plugins: [
     alias({
       resolve: ['.js'],
       entries: {
         src: __dirname + '/src',
-        analytics: __dirname + '/src/analytics',
-        check: __dirname + '/src/check',
-        hook: __dirname + '/src/hook',
-        inject: __dirname + '/src/inject',
-        notification: __dirname + '/src/notification',
-        message: __dirname + '/src/message',
-        store: __dirname + '/src/store',
-        utils: __dirname + '/src/utils',
         react: 'preact/compat',
         'react-dom/test-utils': 'preact/test-utils',
         'react-dom': 'preact/compat',

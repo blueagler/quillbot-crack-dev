@@ -12,7 +12,7 @@ export default function () {
     height: '52px',
     justifyContent: 'space-between',
     alignItems: 'center',
-    right: '58px'
+    right: '60px'
   });
 
 

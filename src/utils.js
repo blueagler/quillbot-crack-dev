@@ -1,7 +1,7 @@
 import store from './store';
-import { enqueueSnackbar } from 'store/snackbar/action';
-import { openDialog } from 'store/dialog/action';
-import { message } from 'message';
+import { enqueueSnackbar } from './store/snackbar/action';
+import { openDialog } from './store/dialog/action';
+import { message } from './message';
 
 export function notify(
   message = '',

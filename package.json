@@ -16,7 +16,8 @@
     "preact": "^10.6.4",
     "react-ga4": "^1.4.1",
     "react-redux": "^7.2.6",
-    "redux": "^4.1.2"
+    "redux": "^4.1.2",
+    "use-local-storage-state": "^13.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",

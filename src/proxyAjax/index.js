@@ -1,8 +1,8 @@
 import { responseHookList, requestHookList } from "./rules";
-import { proxy } from "ajax-hook";
+import { proxy as p, unProxy as u } from "ajax-hook";
 
-export default function async() {
-  proxy({
+export function proxy() {
+  p({
     onRequest: (config, handler) => {
       const matchedRules = requestHookList.filter(({ match }) => match.test(config.url));
       if (matchedRules) {
@@ -32,4 +32,7 @@ export default function async() {
       handler.next(response);
     }
   })
+}
+export function unproxy() {
+  u();
 }

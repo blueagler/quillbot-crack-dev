@@ -15,11 +15,11 @@ export const message = {
   },
   hookPremium: {
     success: 'Premium Hooked!',
+    disabled: 'Premium Hook is disabled, click setting icon (Right Top Nav) to enable it',
   },
   setting: {
-    title: 'QuillBot Premium Crack Setting',
-    save: 'Save Changes',
-    cancel: 'Cancel',
+    title: 'QuillBot Premium Crack',
+    close: 'OK!',
   },
   star: 'Give a ',
 }
