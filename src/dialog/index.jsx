@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';

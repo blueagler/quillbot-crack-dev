@@ -9,7 +9,7 @@ import summary from 'rollup-plugin-summary';
 import progress from 'rollup-plugin-progress';
 
 export default defineConfig({
-  input: "./src/app.js",
+  input: "./src/index.js",
   output: {
     file: "./dist/quillbot.js",
     format: "iife"
@@ -17,7 +17,7 @@ export default defineConfig({
   treeshake: 'smallest',
   plugins: [
     alias({
-      resolve: ['.js'],
+      resolve: ['.js', '.jsx'],
       entries: {
         src: __dirname + '/src',
         react: 'preact/compat',
@@ -40,12 +40,19 @@ export default defineConfig({
         ]
       ],
       "plugins": [
-        ["@emotion/babel-plugin", {}]
+        ["@emotion/babel-plugin", {}],
+        ['babel-plugin-jsx-pragmatic', {
+          module: 'preact',
+          import: 'h',
+          export: 'h',
+        }],
       ],
       babelHelpers: 'bundled',
     }),
     commonjs(),
-    nodeResolve(),
+    nodeResolve({
+      extensions: ['.js', '.jsx'],
+    }),
     terser({
       compress: {
         ecma: 6

@@ -1,5 +1,5 @@
 import { message } from "../message";
-import { Fragment, h } from 'preact';
+import { Fragment } from 'preact';
 import { useState } from 'preact/hooks';
 import { useConfig } from '../config';
 
@@ -11,7 +11,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Switch from '@mui/material/Switch';
 
@@ -49,7 +50,6 @@ export default function () {
   const handleChangeTab = (event, newValue) => {
     setTab(newValue);
   };
-
   return (
     <Fragment>
       <IconButton onClick={handleOpen}>
@@ -73,13 +73,16 @@ export default function () {
             <List>
               {
                 config.map(({ id, enabled, label, description }) =>
-                  <ListItemButton onClick={() => handleToggleConfig(id)}>
-                    <ListItemText primary={label} secondary={description} />
-                    <Switch
-                      edge="end"
-                      checked={enabled}
-                    />
-                  </ListItemButton>
+                  <ListItem>
+                    <ListItemButton onClick={() => handleToggleConfig(id)}>
+                      <ListItemText primary={label} secondary={description} />
+                      <Switch
+                        edge="end"
+                        checked={enabled}
+                      />
+                    </ListItemButton>
+                  </ListItem>
+
                 )
               }
             </List>
@@ -95,6 +98,7 @@ export default function () {
           </Button>
         </DialogActions>
       </Dialog>
+
     </Fragment>
   )
 }

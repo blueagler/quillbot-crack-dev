@@ -1,5 +1,5 @@
 import { message } from "../message";
-import { h, Fragment } from 'preact';
+import { Fragment } from 'preact';
 import { styled } from '@mui/material/styles';
 
 export default function () {

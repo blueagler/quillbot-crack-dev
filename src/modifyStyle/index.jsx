@@ -1,4 +1,4 @@
-import { h, Fragment } from 'preact';
+import { Fragment } from 'preact';
 import { useConfig } from '../config';
 import GlobalStyles from '@mui/material/GlobalStyles';
 

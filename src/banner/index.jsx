@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { styled } from '@mui/material/styles';
 import Support from "./support";
 import Setting from "./setting";

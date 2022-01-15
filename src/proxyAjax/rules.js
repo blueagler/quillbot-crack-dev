@@ -57,7 +57,7 @@ export const responseHookList = [
     overrideFunc(r) {
       r = JSON.parse(r);
 
-      const hookEnabled = () => getConfig.find(({ id }) => id === 'hook-premium').enabled;
+      const hookEnabled = getConfig().find(({ id }) => id === 'hook-premium').enabled;
 
       if (!r.data.profile.premium) {
         notify(hookEnabled ? message.hookPremium.success : message.hookPremium.disabled, hookEnabled ? 'success' : 'warning');
