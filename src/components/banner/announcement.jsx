@@ -4,13 +4,10 @@ import { memo } from "preact/compat";
 import { Fragment } from 'preact';
 
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
 import Badge from '@mui/material/Badge';
 import IconButton from '@mui/material/IconButton';
 import AnnouncementIcon from '@mui/icons-material/Announcement';
+import Popover from '@mui/material/Popover';
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -26,13 +23,15 @@ import { message } from 'message';
 
 export default memo(function () {
 
-  const [open, setOpen] = useState(false);
+  const [popover, setPopover] = useState(null);
+
+  const open = useMemo(() => !!popover, [popover]);
 
   const [storage, setStorage] = useStorage();
 
-  const handleOpen = useCallback(() => setOpen(true), []);
+  const handleOpen = useCallback(event => setPopover(event.currentTarget), []);
 
-  const handleClose = useCallback(() => setOpen(false), []);
+  const handleClose = useCallback(() => setPopover(null), []);
 
   const announcementData = useSelector(store => store.remoteConfig.announcements || {});
 
@@ -49,59 +48,53 @@ export default memo(function () {
   }), [storage]);
 
   return (
-    announcementList.length > 0
-      ?
-      <Fragment>
-        <IconButton onClick={handleOpen}>
-          <Badge badgeContent={announcementList.length} color='error'>
-            <AnnouncementIcon />
-          </Badge>
-        </IconButton>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-        >
-          <DialogTitle>
-            {message.announcement.title}
-          </DialogTitle>
-          <DialogContent>
-            {
-              announcementList.map(({ id, title, content, link = false }) =>
-                <Accordion TransitionProps={{ unmountOnExit: true }}>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                  >
-                    <Typography>{title}</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Card>
-                      <CardContent>
-                        <Typography>
-                          {content}
-                        </Typography>
-                      </CardContent>
-                      <CardActions>
-                        {
-                          link && <Button href={link.href}>{link.text}</Button>
-                        }
-                        <Button onClick={() => ignore(id)}>{message.announcement.ignore}</Button>
-                      </CardActions>
-                    </Card>
-                  </AccordionDetails>
-                </Accordion>
-              )
-            }
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>
-              {message.announcement.close}
-            </Button>
-          </DialogActions>
-        </Dialog>
+    <Fragment>
+      <IconButton onClick={handleOpen}>
+        <Badge badgeContent={announcementList.length} color='error'>
+          <AnnouncementIcon />
+        </Badge>
+      </IconButton>
+      <Popover
+        open={open}
+        anchorEl={popover}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+      >
+        {
+          announcementList.map(({ id, title, content, link = false }) =>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+              >
+                <Typography>{title}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Card elevation={0}>
+                  <CardContent>
+                    <Typography>
+                      {content}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    {
+                      link && <Button href={link.href}>{link.text}</Button>
+                    }
+                    <Button onClick={() => ignore(id)}>{message.announcement.ignore}</Button>
+                  </CardActions>
+                </Card>
+              </AccordionDetails>
+            </Accordion>
+          )
+        }
+      </Popover>
 
-      </Fragment>
-      :
-      null
-
+    </Fragment>
   )
 })

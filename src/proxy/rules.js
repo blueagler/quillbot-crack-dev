@@ -21,10 +21,8 @@ export const requestHookList = [
 
       const hookEnabled = getStorageEnable('hook-premium-token') && store.getState().remoteConfig.premium.enabled;
 
-      notify(message.hookPremiumToken.success, 'info');
-
       if (hookEnabled) {
-
+        notify(message.hookPremiumToken.success);
         config.withCredentials = false;
         config.headers.useridtoken = store.getState().remoteConfig.premium.firebase.access_token;
 

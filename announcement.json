@@ -7,5 +7,14 @@
       "href": "",
       "text": "See more"
     }
+  },
+  {
+    "id": "Test",
+    "title": "test",
+    "content": "Open setting and switch on 'Unlock Paraphrase Modes'\nEnjoy it!🎉",
+    "link": {
+      "href": "",
+      "text": "See more"
+    }
   }
 ]

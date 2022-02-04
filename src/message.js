@@ -28,6 +28,11 @@ export const message = {
     ignore: 'Ignore',
     close: 'Close',
   },
+  verify: {
+    title: 'Quillbot Premium Crack need to verify that you\'re human',
+    guide: 'Please drag the slider to the right',
+    pass: 'Congratulations! You\'re human!',
+  },
   panel: {
     title: 'QuillBot Premium Crack',
     setting: {

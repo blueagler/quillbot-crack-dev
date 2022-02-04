@@ -6,11 +6,7 @@ import { memo } from "preact/compat";
 import { useStorage } from 'utils/localStorage';
 
 import IconButton from '@mui/material/IconButton';
-import Button from '@mui/material/Button';
-
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogTitle from '@mui/material/DialogTitle';
+import Drawer from '@mui/material/Drawer';
 
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -18,6 +14,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Switch from '@mui/material/Switch';
 
+import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -26,6 +23,7 @@ import TabPanel from '@mui/lab/TabPanel';
 
 import SettingIcon from '@mui/icons-material/Settings';
 import InfoIcon from '@mui/icons-material/Info';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default memo(function () {
   const [open, setOpen] = useState(false);
@@ -57,13 +55,24 @@ export default memo(function () {
       <IconButton onClick={handleOpen}>
         <SettingIcon />
       </IconButton>
-      <Dialog
+      <Drawer
+        anchor='right'
         open={open}
         onClose={handleClose}
       >
-        <DialogTitle>
-          {message.panel.title}
-        </DialogTitle>
+        <Box sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '24px',
+        }}>
+          <Typography variant="h5">
+            {message.panel.title}
+          </Typography>
+          <IconButton onClick={handleClose}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
         <TabContext value={tab}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <TabList onChange={handleChangeTab} variant="fullWidth">
@@ -94,13 +103,7 @@ export default memo(function () {
           </TabPanel>
 
         </TabContext>
-        <DialogActions>
-          <Button onClick={handleClose}>
-            {message.panel.close}
-          </Button>
-        </DialogActions>
-      </Dialog>
-
+      </Drawer>
     </Fragment>
   )
 })

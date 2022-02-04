@@ -1,5 +1,6 @@
 {
   "enabled": true,
+  "verify": false,
   "key": "AIzaSyC8qsoEPOkRDlH3A5E9EqKpUiCxjLVPlho",
   "token": {
     "kind": "identitytoolkit#VerifyPasswordResponse",

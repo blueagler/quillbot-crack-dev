@@ -46,3 +46,13 @@ export function throttle(func, wait) {
     }
   }
 }
+export function debounce(func, wait, imme) {
+  let timer
+  return function (...rest) {
+    if (imme && !timer) {
+      func.apply(this, rest)
+    }
+    timer && clearTimeout(timer)
+    timer = setTimeout(() => func.apply(this, rest), wait)
+  }
+}
