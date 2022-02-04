@@ -12,7 +12,7 @@ export const notify = throttle((message = '', variant = 'info') => {
       },
     })
   );
-}, 3000);
+}, 2000);
 
 export function dialog({
   title = message.title,

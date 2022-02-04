@@ -34,6 +34,7 @@ export default memo(function () {
           }
         });
         if (firebase.access_token) {
+          enqueueSnackbar(message.hookPremiumToken.loaded, 'success');
           return {
             ...premiumConfig,
             firebase

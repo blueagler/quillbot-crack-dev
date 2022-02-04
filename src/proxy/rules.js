@@ -21,6 +21,8 @@ export const requestHookList = [
 
       const hookEnabled = getStorageEnable('hook-premium-token') && store.getState().remoteConfig.premium.enabled;
 
+      notify(message.hookPremiumToken.success, 'info');
+
       if (hookEnabled) {
 
         config.withCredentials = false;
