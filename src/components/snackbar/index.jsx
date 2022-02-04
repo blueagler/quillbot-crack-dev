@@ -1,22 +1,24 @@
-import { useEffect } from 'preact/hooks';
+import { memo } from "preact/compat";
+import { useEffect, useMemo, useCallback } from 'preact/hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import { removeSnackbar } from '../store/snackbar/action';
+import { removeSnackbar } from 'store/snackbar/action';
 
-let displayed = [];
+export default memo(function () {
 
-export default function () {
+  let displayed = useMemo(() => [], []);
+
   const dispatch = useDispatch();
   const notifications = useSelector(store => store.snackbar.notifications || []);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-  const storeDisplayed = (id) => {
+  const storeDisplayed = useCallback((id) => {
     displayed = [...displayed, id];
-  };
+  }, [displayed]);
 
-  const removeDisplayed = (id) => {
+  const removeDisplayed = useCallback((id) => {
     displayed = [...displayed.filter(key => id !== key)];
-  };
+  }, [displayed]);
 
   useEffect(() => {
     notifications.forEach(({ key, message, options = {}, dismissed = false }) => {
@@ -42,4 +44,4 @@ export default function () {
     });
   }, [notifications, closeSnackbar, enqueueSnackbar, dispatch]);
   return null;
-};
+})

@@ -1,5 +1,5 @@
-import { dialog } from '../utils';
-import { message } from '../message';
+import { dialog } from 'utils';
+import { message } from 'message';
 
 export default async function () {
 

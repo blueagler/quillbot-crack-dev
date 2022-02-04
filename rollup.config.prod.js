@@ -5,8 +5,8 @@ import alias from '@rollup/plugin-alias';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
-import summary from 'rollup-plugin-summary';
 import progress from 'rollup-plugin-progress';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 export default defineConfig({
   input: "./src/index.js",
@@ -20,6 +20,12 @@ export default defineConfig({
       resolve: ['.js', '.jsx'],
       entries: {
         src: __dirname + '/src',
+        analytic: __dirname + '/src/analytic',
+        components: __dirname + '/src/components',
+        proxy: __dirname + '/src/proxy',
+        store: __dirname + '/src/store/',
+        utils: __dirname + '/src/utils/',
+        message: __dirname + '/src/message.js',
         react: 'preact/compat',
         'react-dom/test-utils': 'preact/test-utils',
         'react-dom': 'preact/compat',
@@ -52,6 +58,7 @@ export default defineConfig({
     commonjs(),
     nodeResolve({
       extensions: ['.js', '.jsx'],
+      mainFields: ["jsnext", "preferBuiltins", "browser"]
     }),
     terser({
       compress: {
@@ -61,7 +68,11 @@ export default defineConfig({
         comments: false
       }
     }),
-    summary(),
-    progress()
+    progress(),
+    visualizer({
+      open: true,
+      gzipSize: true,
+      brotliSize: true
+    })
   ]
 })

@@ -1,22 +1,28 @@
+import { memo } from "preact/compat";
 import { useEffect } from 'preact/hooks';
 import { Provider } from 'react-redux';
+
 import { SnackbarProvider } from 'notistack';
-import store from './store';
-import Banner from './banner';
-import Dialog from './dialog';
-import Snackbar from './snackbar';
-import ModifyStyle from './modifyStyle';
 
-import { proxy, unproxy } from "./proxyAjax";
-import check from './check';
-import { init as initAnalytics } from './analytic';
+import store from 'store';
+import Banner from 'components/banner';
+import Dialog from 'components/dialog';
+import Snackbar from 'components/snackbar';
+import ModifyStyle from 'components/modifyStyle';
+import RemoteConfig from 'components/remoteConfig';
 
-export default function() {
 
+import { proxy, unproxy } from "./proxy";
+import check from 'utils/check';
+import { init as initAnalytics } from 'analytic';
+
+export default memo(function () {
   useEffect(() => {
+
     check();
-    initAnalytics();
     proxy();
+    initAnalytics();
+
     return () => {
       unproxy();
     }
@@ -24,17 +30,13 @@ export default function() {
 
   return (
     <Provider store={store}>
-
-      <Banner />
-      <Dialog />
-
-      <SnackbarProvider>
+      <SnackbarProvider maxSnack={1}>
+        <ModifyStyle />
+        <RemoteConfig />
+        <Dialog />
+        <Banner />
         <Snackbar />
       </SnackbarProvider>
-
-      <ModifyStyle />
-
     </Provider>
   )
-}
-
+})

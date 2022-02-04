@@ -1,18 +1,27 @@
 {
-  "name": "QuillBot Crack",
+  "name": "QuillBot Crack Dev",
   "version": "1.0",
   "description": "To unlock the QuillBot Premium",
-  "manifest_version": 2,
-  "content_scripts": [
+  "manifest_version": 3,
+  "action": {},
+  "permissions": [
+    "webNavigation",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://quillbot.com/*"
+  ],
+  "web_accessible_resources": [
     {
+      "resources": [
+        "quillbot.js"
+      ],
       "matches": [
-        "https://quillbot.com/*"
-      ],
-      "js": [
-        "./quillbot.js"
-      ],
-      "run_at": "document_idle",
-      "all_frames": true
+        "*://quillbot.com/*"
+      ]
     }
-  ]
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
 }

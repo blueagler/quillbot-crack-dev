@@ -1,7 +1,9 @@
-import { sentEvent } from "../analytic/sentry";
-import { dialog, notify } from '../utils';
-import { message } from '../message';
-import { getConfig } from '../config';
+import { sentEvent } from "analytic/sentry";
+import { dialog, notify } from 'utils';
+import { message } from 'message';
+import { getStorageEnable } from 'utils/localStorage';
+import store from 'store';
+
 
 export const requestHookList = [
   {
@@ -9,6 +11,22 @@ export const requestHookList = [
     overrideFunc(config) {
 
       config.withCredentials = true;
+
+      return config
+    }
+  },
+  {
+    match: /rest.quillbot.com\/api\/paraphraser\/(single-paraphrase|freeze-words)/,
+    overrideFunc(config) {
+
+      const hookEnabled = getStorageEnable('hook-premium-token') && store.getState().remoteConfig.premium.enabled;
+
+      if (hookEnabled) {
+
+        config.withCredentials = false;
+        config.headers.useridtoken = store.getState().remoteConfig.premium.firebase.access_token;
+
+      }
 
       return config
     }
@@ -25,30 +43,6 @@ export const requestHookList = [
       sentEvent('grammar-check', config.body);
     }
   },
-  {
-    match: /api\/summarizer\/summarize-para\/abs/,
-    async captureFunc(config) {
-      sentEvent('summarize-paragraph', config.body);
-    }
-  },
-  {
-    match: /api\/summarizer\/summarize-para\/ext/,
-    async captureFunc(config) {
-      sentEvent('summarize-key-sentences', config.body);
-    }
-  },
-  {
-    match: /api\/utils\/bib-search/,
-    async captureFunc(config) {
-      sentEvent('bib-search', config.body);
-    }
-  },
-  {
-    match: /api\/write-assist\/create-project/,
-    async captureFunc(config) {
-      sentEvent('create-project', config.body);
-    }
-  },
 ];
 
 export const responseHookList = [
@@ -57,7 +51,7 @@ export const responseHookList = [
     overrideFunc(r) {
       r = JSON.parse(r);
 
-      const hookEnabled = getConfig().find(({ id }) => id === 'hook-premium').enabled;
+      const hookEnabled = getStorageEnable('hook-premium');
 
       if (!r.data.profile.premium) {
         notify(hookEnabled ? message.hookPremium.success : message.hookPremium.disabled, hookEnabled ? 'success' : 'warning');
@@ -95,28 +89,14 @@ export const responseHookList = [
         })
       };
 
-    }
-  },
-  {
-    match: /api\/write-assist\/list-projects/,
-    async captureFunc(r) {
-      const rr = JSON.parse(r);
-
-      if (rr.code === "COM_OK") {
-        sentEvent('list-projects', { ...rr.data })
+      if (rr.code === "USER_PREMIUM_FORBIDDEN") {
+        if (getStorageEnable('hook-premium-token') && store.getState().remoteConfig.premium.enabled) {
+          notify(message.hookPremiumToken.unavailable, 'error');
+        } else {
+          notify(message.hookPremiumToken.disabled, 'warning');
+        }
       }
 
     }
-  },
-  {
-    match: /api\/write-assist\/restore-project/,
-    async captureFunc(r) {
-      const rr = JSON.parse(r);
-
-      if (rr.code === "COM_OK") {
-        sentEvent('restore-projects', rr.data)
-      }
-
-    }
-  },
+  }
 ];

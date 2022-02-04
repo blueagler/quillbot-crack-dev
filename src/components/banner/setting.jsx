@@ -1,9 +1,9 @@
-import { message } from "../message";
+import { message } from "message";
 import { Fragment } from 'preact';
 import { useState } from 'preact/hooks';
-import { useConfig } from '../config';
-
-import { styled } from '@mui/material/styles';
+import { useCallback } from 'preact/hooks';
+import { memo } from "preact/compat";
+import { useStorage } from 'utils/localStorage';
 
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
@@ -27,63 +27,31 @@ import TabPanel from '@mui/lab/TabPanel';
 import SettingIcon from '@mui/icons-material/Settings';
 import InfoIcon from '@mui/icons-material/Info';
 
-export default function () {
+export default memo(function () {
   const [open, setOpen] = useState(false);
-  const [config, setConfig] = useConfig();
+  const [storage, setStorage] = useStorage();
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  const handleOpen = useCallback(() => setOpen(true), []);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleToggleConfig = (id) => {
-    const newConfig = config.map(item => {
+  const handleClose = useCallback(() => setOpen(false), []);
+
+  const handleToggleStorage = useCallback((id) => {
+    const newStorage = storage.settings.map(item => {
       if (item.id === id) {
         item.enabled = !item.enabled;
       }
       return item;
     })
-    setConfig(newConfig);
-  };
+    setStorage({
+      ...storage,
+      settings: newStorage
+    });
+  }, [storage]);
 
   const [tab, setTab] = useState('setting');
-  const handleChangeTab = (event, newValue) => {
-    setTab(newValue);
-  };
-  const Android12Switch = styled(Switch)(({ theme }) => ({
-    padding: 8,
-    '& .MuiSwitch-track': {
-      borderRadius: 22 / 2,
-      '&:before, &:after': {
-        content: '""',
-        position: 'absolute',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        width: 16,
-        height: 16,
-      },
-      '&:before': {
-        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-          theme.palette.getContrastText(theme.palette.primary.main),
-        )}" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
-        left: 12,
-      },
-      '&:after': {
-        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-          theme.palette.getContrastText(theme.palette.primary.main),
-        )}" d="M19,13H5V11H19V13Z" /></svg>')`,
-        right: 12,
-      },
-    },
-    '& .MuiSwitch-thumb': {
-      boxShadow: 'none',
-      width: 16,
-      height: 16,
-      margin: 2,
-    },
-  }));
+
+  const handleChangeTab = useCallback((_, newValue) => setTab(newValue), []);
+
   return (
     <Fragment>
       <IconButton onClick={handleOpen}>
@@ -106,11 +74,11 @@ export default function () {
           <TabPanel value="setting" sx={{ padding: 0 }}>
             <List>
               {
-                config.map(({ id, enabled, label, description }) =>
+                storage.settings.map(({ id, enabled, label, description }) =>
                   <ListItem>
-                    <ListItemButton onClick={() => handleToggleConfig(id)}>
+                    <ListItemButton onClick={() => handleToggleStorage(id)}>
                       <ListItemText primary={label} secondary={description} />
-                      <Android12Switch
+                      <Switch
                         edge="end"
                         checked={enabled}
                       />
@@ -135,4 +103,4 @@ export default function () {
 
     </Fragment>
   )
-}
+})

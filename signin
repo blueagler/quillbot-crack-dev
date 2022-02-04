@@ -1,0 +1,3 @@
+curl 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC8qsoEPOkRDlH3A5E9EqKpUiCxjLVPlho' \
+-H 'Content-Type: application/json' \
+--data-binary '{"email":"yingfan03@aliyun.com","password":"yingfan202112","returnSecureToken":true}'
