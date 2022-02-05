@@ -1,4 +1,3 @@
-import { memo } from "preact/compat";
 import { useCallback } from 'preact/hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
@@ -9,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContentText from '@mui/material/DialogContentText';
 import { closeDialog } from 'store/dialog/action';
 
-export default memo(function () {
+export default function () {
   const dispatch = useDispatch();
 
   const dialog = useSelector(store => store.dialog || {});
@@ -44,4 +43,4 @@ export default memo(function () {
     </Dialog>
 
   )
-})
+}

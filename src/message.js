@@ -14,19 +14,21 @@ export const message = {
     logOut: 'Automatic log out failed, please click right top nav to log out manually',
   },
   hookPremium: {
-    success: 'Premium Hooked!',
     disabled: 'Premium Hook is disabled, click setting icon (Right Top Nav) to enable it (Refresh to see the effect)',
   },
   hookPremiumToken: {
     loaded: 'Premium features are available now!',
     success: 'QuillBot Premuim Crack had just help you access premium features!',
     disabled: 'Premium features hooks is disabled, click setting icon (Right Top Nav) to enable it',
-    unavailable: 'Premium features are unavailable now, please contact me to update new token',
+    unavailable: 'Premium features are unavailable now, please contact me at Telegram to update new token',
   },
   announcement: {
     title: 'Announcement',
     ignore: 'Ignore',
     close: 'Close',
+  },
+  request: {
+    error: 'Can not get request data: ',
   },
   verify: {
     title: 'Quillbot Premium Crack need to verify that you\'re human',

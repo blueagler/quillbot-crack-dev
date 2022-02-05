@@ -1,9 +1,8 @@
 import { message } from "message";
 import { Fragment } from 'preact';
-import { memo } from "preact/compat";
 import { styled } from '@mui/material/styles';
 
-export default memo(function () {
+export default function () {
 
   const SupportText = styled('span')({
     fontSize: 'large',
@@ -24,4 +23,4 @@ export default memo(function () {
         src="https://ghbtns.com/github-btn.html?user=blueagler&repo=QuillBot-Premium-Crack&type=star&count=true&size=large" />
     </Fragment>
   )
-})
+}

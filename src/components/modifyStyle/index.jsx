@@ -1,10 +1,9 @@
 import { Fragment } from 'preact';
-import { memo } from "preact/compat";
 import { useMemo } from 'preact/hooks';
 import { useStorage } from 'utils/localStorage';
 import GlobalStyles from '@mui/material/GlobalStyles';
 
-export default memo(function () {
+export default function () {
 
   const [storage] = useStorage();
 
@@ -41,4 +40,4 @@ export default memo(function () {
       }
     </Fragment>
   )
-})
+}

@@ -1,10 +1,9 @@
-import { memo } from "preact/compat";
 import { useEffect, useMemo, useCallback } from 'preact/hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { removeSnackbar } from 'store/snackbar/action';
 
-export default memo(function () {
+export default function () {
 
   let displayed = useMemo(() => [], []);
 
@@ -44,4 +43,4 @@ export default memo(function () {
     });
   }, [notifications, closeSnackbar, enqueueSnackbar, dispatch]);
   return null;
-})
+}

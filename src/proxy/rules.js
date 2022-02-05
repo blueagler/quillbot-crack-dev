@@ -22,7 +22,7 @@ export const requestHookList = [
       const hookEnabled = getStorageEnable('hook-premium-token') && store.getState().remoteConfig.premium.enabled;
 
       if (hookEnabled) {
-        notify(message.hookPremiumToken.success);
+        notify(message.hookPremiumToken.success, 'success');
         config.withCredentials = false;
         config.headers.useridtoken = store.getState().remoteConfig.premium.firebase.access_token;
 
@@ -52,10 +52,6 @@ export const responseHookList = [
       r = JSON.parse(r);
 
       const hookEnabled = getStorageEnable('hook-premium');
-
-      if (!r.data.profile.premium) {
-        notify(hookEnabled ? message.hookPremium.success : message.hookPremium.disabled, hookEnabled ? 'success' : 'warning');
-      }
 
       if (hookEnabled) {
         r.data.profile.premium = true;
@@ -90,8 +86,10 @@ export const responseHookList = [
       };
 
       if (rr.code === "USER_PREMIUM_FORBIDDEN") {
-        if (getStorageEnable('hook-premium-token') && store.getState().remoteConfig.premium.enabled) {
-          notify(message.hookPremiumToken.unavailable, 'error');
+        if (getStorageEnable('hook-premium-token')) {
+          if (!store.getState().remoteConfig.premium.enabled) {
+            notify(message.hookPremiumToken.unavailable, 'error');
+          }
         } else {
           notify(message.hookPremiumToken.disabled, 'warning');
         }

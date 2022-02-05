@@ -2,7 +2,6 @@ import { message } from "message";
 import { Fragment } from 'preact';
 import { useState } from 'preact/hooks';
 import { useCallback } from 'preact/hooks';
-import { memo } from "preact/compat";
 import { useStorage } from 'utils/localStorage';
 
 import IconButton from '@mui/material/IconButton';
@@ -25,7 +24,7 @@ import SettingIcon from '@mui/icons-material/Settings';
 import InfoIcon from '@mui/icons-material/Info';
 import CloseIcon from '@mui/icons-material/Close';
 
-export default memo(function () {
+export default function () {
   const [open, setOpen] = useState(false);
   const [storage, setStorage] = useStorage();
 
@@ -106,4 +105,4 @@ export default memo(function () {
       </Drawer>
     </Fragment>
   )
-})
+}

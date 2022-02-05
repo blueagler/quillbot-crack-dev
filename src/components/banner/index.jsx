@@ -1,10 +1,9 @@
-import { memo } from "preact/compat";
 import { styled } from '@mui/material/styles';
 import Support from "./support";
 import Setting from "./setting";
 import Announcement from './announcement';
 
-export default memo(function () {
+export default function () {
 
   const Wrapper = styled('div')({
     position: 'absolute',
@@ -16,7 +15,6 @@ export default memo(function () {
     right: '60px'
   });
 
-
   return (
     <Wrapper className='mui-fixed'>
       <Support />
@@ -24,4 +22,4 @@ export default memo(function () {
       <Announcement />
     </Wrapper>
   )
-})
+}
