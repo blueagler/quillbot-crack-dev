@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useMemo, useState, useCallback } from 'preact/hooks';
+import { memo } from 'preact/compat';
 import { Fragment } from 'preact';
 
 import Button from '@mui/material/Button';
@@ -20,7 +21,7 @@ import CardContent from '@mui/material/CardContent';
 import { useStorage } from 'utils/localStorage';
 import { message } from 'message';
 
-export default function () {
+export default memo(function () {
 
   const [popover, setPopover] = useState(null);
 
@@ -96,4 +97,4 @@ export default function () {
 
     </Fragment>
   )
-}
+})

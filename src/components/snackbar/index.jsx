@@ -1,11 +1,12 @@
-import { useEffect, useMemo, useCallback } from 'preact/hooks';
+import { memo } from 'preact/compat';
+import { useEffect, useCallback, useRef } from 'preact/hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { removeSnackbar } from 'store/snackbar/action';
 
-export default function () {
+export default memo(function () {
 
-  let displayed = useMemo(() => [], []);
+  let displayed = useRef([]);
 
   const dispatch = useDispatch();
   const notifications = useSelector(store => store.snackbar.notifications || []);
@@ -34,7 +35,7 @@ export default function () {
             options.onClose(event, reason, myKey);
           }
         },
-        onExited: (event, myKey) => {
+        onExited: (_, myKey) => {
           dispatch(removeSnackbar(myKey));
           removeDisplayed(myKey);
         },
@@ -43,4 +44,4 @@ export default function () {
     });
   }, [notifications, closeSnackbar, enqueueSnackbar, dispatch]);
   return null;
-}
+})

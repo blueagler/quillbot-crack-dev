@@ -1,3 +1,4 @@
+import { memo } from 'preact/compat';
 import { useEffect, useCallback, useState } from 'preact/hooks';
 import { useDispatch } from 'react-redux';
 import { setPremium, setAnnouncement } from 'store/remoteConfig/action';
@@ -13,7 +14,7 @@ import Slider from '@mui/material/Slider';
 import useInterval from './useInterval';
 import { debounce } from 'utils';
 
-export default function () {
+export default memo(function () {
 
   const dispatch = useDispatch();
   const [storage] = useStorage();
@@ -121,4 +122,4 @@ export default function () {
       </DialogContent>
     </Dialog>
   )
-}
+})

@@ -1,3 +1,4 @@
+import { memo } from 'preact/compat';
 import { useEffect } from 'preact/hooks';
 import { Provider } from 'react-redux';
 
@@ -15,7 +16,7 @@ import { proxy, unproxy } from "./proxy";
 import check from 'utils/check';
 import { init as initAnalytics } from 'analytic';
 
-export default function () {
+export default memo(function () {
   useEffect(() => {
 
     check();
@@ -38,4 +39,4 @@ export default function () {
       </SnackbarProvider>
     </Provider>
   )
-}
+})
