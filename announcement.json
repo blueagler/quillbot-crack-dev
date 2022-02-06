@@ -1,20 +1,33 @@
 [
   {
-    "id": "PREMIUM_PARAPHRASE_MODE_AVALIAVLE",
-    "title": "Premium Paraphrase Modes are available now!",
-    "content": "Open setting and switch on 'Unlock Paraphrase Modes'\nEnjoy it!🎉",
-    "link": {
-      "href": "",
-      "text": "See more"
-    }
+    "id": "TELEGRAM_GROUP",
+    "title": "👬 Join telegram group",
+    "content": "You can report any issues and talk your thoughts",
+    "ignorable": false,
+    "links": [
+      {
+        "href": "https://t.me/QuillBot_Premium_Crack",
+        "text": "Join Now!"
+      }
+    ]
   },
   {
-    "id": "Test",
-    "title": "test",
-    "content": "Open setting and switch on 'Unlock Paraphrase Modes'\nEnjoy it!🎉",
-    "link": {
-      "href": "",
-      "text": "See more"
-    }
+    "id": "FIXED_STYLE_VERSION_UPDATE",
+    "title": "⚠️ If you see switches in the setting doesn't display",
+    "content": "Please update the latest version which fixes the style errors!",
+    "ignorable": true,
+    "links": [
+      {
+        "href": "https://github.com/blueagler/QuillBot-Premium-Crack/releases/download/extension/QuillBot.Premium.Crack.zip",
+        "text": "Download"
+      }
+    ]
+  },
+  {
+    "id": "PREMIUM_PARAPHRASE_MODE_AVALIAVLE",
+    "title": "🎉 Premium Paraphrase Modes are available now!",
+    "content": "Switch on 'Unlock Paraphrase Modes' in settings and Enjoy it!",
+    "ignorable": true,
+    "links": []
   }
 ]

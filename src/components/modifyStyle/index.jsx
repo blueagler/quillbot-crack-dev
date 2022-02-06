@@ -37,7 +37,7 @@ export default memo(function () {
           .filter(key =>
             storage.settings.find(item => item.id === key && item.enabled)
           )
-          .map(key => <GlobalStyles styles={styleList[key]} />)
+          .map(key => <GlobalStyles key={key} styles={styleList[key]} />)
       }
     </Fragment>
   )

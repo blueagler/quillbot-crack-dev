@@ -84,7 +84,7 @@ export default memo(function () {
             <List>
               {
                 storage.settings.map(({ id, enabled, label, description }) =>
-                  <ListItem>
+                  <ListItem key={id}>
                     <ListItemButton onClick={() => handleToggleStorage(id)}>
                       <ListItemText primary={label} secondary={description} />
                       <Switch

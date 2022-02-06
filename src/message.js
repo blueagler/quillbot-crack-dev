@@ -23,7 +23,12 @@ export const message = {
     unavailable: 'Premium features are unavailable now, please contact me at Telegram to update new token',
   },
   announcement: {
-    title: 'Announcement',
+    list: {
+      title: 'Announcements',
+    },
+    ignoredList: {
+      title: 'Ignored',
+    },
     ignore: 'Ignore',
     close: 'Close',
   },
@@ -32,7 +37,10 @@ export const message = {
   },
   verify: {
     title: 'Quillbot Premium Crack need to verify that you\'re human',
-    guide: 'Please drag the slider to the right',
+    guide: '<p>Please input the verification code from Telegram Group <strong>(valid for a week)</strong></p><p>Or move the slider to the given number (valid for 2 hours)<p/><p>The reason of verification is in Telegram Group<p/>',
+    sliderTo: 'Move The Slider To Number: ',
+    telegramBtn: 'Join Telegram Group',
+    input: 'Verification Code (Recommended: once unlock, free for a week)',
     pass: 'Congratulations! You\'re human!',
   },
   panel: {

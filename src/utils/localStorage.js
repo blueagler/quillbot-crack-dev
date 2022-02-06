@@ -25,15 +25,17 @@ const initialStorage = {
   announcement: {
     ignores: [],
   },
-
+  verify: {
+    expiredAt: 0,
+  }
 }
 
-export const useStorage = createLocalStorageStateHook('QBC-storage', initialStorage);
+export const useStorage = createLocalStorageStateHook('QBC-storage-0', initialStorage);
 
 export const getStorage = (key) => {
   let r;
-  if (localStorage.getItem('QBC-storage')) {
-    r = JSON.parse(localStorage.getItem('QBC-storage'));
+  if (localStorage.getItem('QBC-storage-0')) {
+    r = JSON.parse(localStorage.getItem('QBC-storage-0'));
     if (!r.hasOwnProperty(key)) {
       r[key] = initialStorage[key];
     }
@@ -56,7 +58,7 @@ export const getStorageEnable = (getId) => {
       ...settings,
       initialStorage.settings.find(({ id }) => id === getId)
     ];
-    localStorage.setItem('QBC-storage', JSON.stringify({
+    localStorage.setItem('QBC-storage-0', JSON.stringify({
       ...storage,
       settings: newStorage
     }));

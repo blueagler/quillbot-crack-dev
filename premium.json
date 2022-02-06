@@ -1,8 +1,11 @@
 {
   "enabled": true,
-  "verify": false,
+  "verify": {
+    "enabled": true,
+    "code": "qmqq1122"
+  },
   "key": "AIzaSyC8qsoEPOkRDlH3A5E9EqKpUiCxjLVPlho",
   "token": {
-    "refreshToken": "AFxQ4_p4pPqvpSITlDujMhbxHC-gNLDDAX3L8Fe8k9QfzrNiv6Ei9PjJlYT4InaG5Fsj7hQyZIIoGdNW7MHp5j84R8aOY0gxcIYot7MIvW0OQYzaruhQHq8AAC02LqquiQoYbVieE8L3BJH96IhNMtvqW44UYdBavBCyRWf5bOgrGowtk_49ZojbyRE90AH8SDVVOrUWct4SzTkWnDkFnNcbyTzjZLcRPg"
+    "refreshToken": "AFxQ4_qhUelFneTWq1poz1xdt3HoPM2FCUbOq4UhUsb3zCiNFhq0sB0dIGfd-rPNUBeUOimiSsP-WYRUGnaX3Cc99dclydGDwsNip8kG4vLOxZyXqw1u3E-_7mS3vlCpEq1AoZ6-SIc56lEPfkB-S_wFsvHHXd9ZWpqT3MLwfFY9qbW1ujiaSCXeyxBJ1B-3CwGBDl0gMS96dTiY9zFMIMF3fpSuxnyJLw"
   }
 }
