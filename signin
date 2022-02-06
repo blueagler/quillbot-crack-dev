@@ -1,3 +1,0 @@
-curl 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC8qsoEPOkRDlH3A5E9EqKpUiCxjLVPlho' \
--H 'Content-Type: application/json' \
---data-binary '{"email":"13702721856@139.com","password":"yingfan202112","returnSecureToken":true}'

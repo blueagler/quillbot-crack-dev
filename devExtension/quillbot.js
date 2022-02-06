@@ -44183,7 +44183,7 @@ See https://mui.com/r/migration-v4/#material-ui-core-styles for more details.` )
 	    sx: {
 	      padding: 0
 	    }
-	  }, list.map(({
+	  }, list.length > 0 && list.map(({
 	    id,
 	    title,
 	    content,
@@ -44203,7 +44203,7 @@ See https://mui.com/r/migration-v4/#material-ui-core-styles for more details.` )
 	    dangerouslySetInnerHTML: {
 	      __html: content
 	    }
-	  })), v$1(CardActions, null, links.map(({
+	  })), v$1(CardActions, null, links.length > 0 && links.map(({
 	    href,
 	    text
 	  }) => v$1(Button, {
@@ -44215,7 +44215,7 @@ See https://mui.com/r/migration-v4/#material-ui-core-styles for more details.` )
 	    sx: {
 	      padding: 0
 	    }
-	  }, ignoredList.map(({
+	  }, ignoredList.length > 0 && ignoredList.map(({
 	    id,
 	    title,
 	    content,
@@ -44234,7 +44234,7 @@ See https://mui.com/r/migration-v4/#material-ui-core-styles for more details.` )
 	    dangerouslySetInnerHTML: {
 	      __html: content
 	    }
-	  })), v$1(CardActions, null, links.map(({
+	  })), v$1(CardActions, null, links.length > 0 && links.map(({
 	    href,
 	    text
 	  }) => v$1(Button, {
@@ -54792,6 +54792,7 @@ See https://mui.com/r/migration-v4/#material-ui-core-styles for more details.` )
 	  const [sliderAnswer, setSliderAnswer] = l(100);
 	  const [sliderInput, setSliderInput] = l(0);
 	  const [codeInput, setCodeInput] = l("");
+	  const [loadInterval, setLoadInterval] = l(3600 * 1000);
 	  const pass = A$1(time => {
 	    setShowVerify(false);
 	    setSliderAnswer(100);
@@ -54869,6 +54870,7 @@ See https://mui.com/r/migration-v4/#material-ui-core-styles for more details.` )
 	            });
 
 	            if (firebase.access_token) {
+	              setLoadInterval(Number(firebase.expires_in) * 1000);
 	              enqueueSnackbar(message.hookPremiumToken.loaded, {
 	                variant: 'success'
 	              });
@@ -54913,7 +54915,7 @@ See https://mui.com/r/migration-v4/#material-ui-core-styles for more details.` )
 	  }, []);
 	  useInterval(() => {
 	    loadRemoteConfig();
-	  }, 300000);
+	  }, loadInterval);
 	  return v$1(Dialog$1, {
 	    open: showVerify
 	  }, v$1(DialogTitle, null, message.verify.title), v$1(DialogContent, null, v$1(DialogContentText, {
