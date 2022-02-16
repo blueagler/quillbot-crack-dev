@@ -15,7 +15,7 @@ export default memo(function () {
   const dialog = useSelector(getDialog);
   const open = useMemo(() => !!dialog.content, [dialog.content]);
 
-  const handleClose = useCallback(() => dispatch(closeDialog()), []);
+  const handleClose = useCallback(() => dialog.closable && dispatch(closeDialog()), [dialog.closable]);
 
   return (
     <Dialog

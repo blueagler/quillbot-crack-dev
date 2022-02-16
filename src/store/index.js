@@ -8,7 +8,7 @@ import dialog from './dialog';
 import setting from './setting';
 import snackbar from './snackbar';
 import verify from './verify';
-
+import userBanned from './userBanned';
 
 const persist = (reducer, key, whiteList) => persistReducer({
   key,
@@ -20,6 +20,7 @@ export const store = configureStore({
   reducer: {
     snackbar,
     dialog,
+    userBanned: persist(userBanned, 'userBanned'),
     announcement: persist(announcement, 'announcement'),
     premium: persist(premium, 'premium'),
     setting: persist(setting, 'setting', ['disabled']),

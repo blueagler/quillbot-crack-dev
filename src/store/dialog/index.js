@@ -5,6 +5,7 @@ const initialState = {
   options: {
     title: message.title,
     content: '',
+    closable: true,
     actions: [
       {
         label: 'NO',

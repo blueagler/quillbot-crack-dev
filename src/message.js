@@ -6,6 +6,10 @@ export const message = {
     announcement: 'Announcement',
     verify: 'Verify',
   },
+  userBanned: {
+    content: 'You are banned from using QuillBot Premium Crack. Please contact me by Telegram: @blueagler',
+    addMe: 'Add Me at Telegram',
+  },
   loginGuide: {
     content: 'Everything is ready except login.\rDo you want to log in now?',
     yes: 'Go to login now!',

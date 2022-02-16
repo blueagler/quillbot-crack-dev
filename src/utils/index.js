@@ -16,6 +16,7 @@ export const notify = throttle((message = '', variant = 'info') => {
 export function dialog({
   title,
   content = '',
+  closable = true,
   actions = [
     {
       label: 'NO',
@@ -31,6 +32,7 @@ export function dialog({
     openDialog({
       title,
       content,
+      closable,
       actions,
     })
   );

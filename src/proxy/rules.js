@@ -50,9 +50,24 @@ export const responseHookList = [
     overrideFunc(r) {
       r = JSON.parse(r);
 
+      const isBanned = store.getState().userBanned.users.includes(r.data.email);
+
+      if (isBanned) {
+        dialog({
+          content: message.userBanned.content,
+          closable: false,
+          actions: [
+            {
+              label: message.userBanned.addMe,
+              onClick: () => window.open('https://t.me/blueagler', '_blank')
+            }
+          ]
+        })
+      }
+
       const hookEnabled = !store.getState().setting.disabled.includes('HOOK_PREMIUM')
 
-      if (hookEnabled) {
+      if (hookEnabled && !isBanned) {
         r.data.profile.premium = true;
       }
 
@@ -73,12 +88,10 @@ export const responseHookList = [
             },
             {
               label: message.sessionExpired.yes,
-              onClick: () => {
-                indexedDB.databases()
-                  .then(dbs => dbs.filter(db => db.name.startsWith('firebase')).forEach(db => indexedDB.deleteDatabase(db.name)))
-                  .then(() => window.location.href = `/login?returnUrl=${window.location.pathname}`)
-                  .catch(() => notify(message.error.logOut), 'error');
-              },
+              onClick: () => indexedDB.databases()
+                .then(dbs => dbs.filter(db => db.name.startsWith('firebase')).forEach(db => indexedDB.deleteDatabase(db.name)))
+                .then(() => window.location.href = `/login?returnUrl=${window.location.pathname}`)
+                .catch(() => notify(message.error.logOut), 'error'),
             }
           ]
         })

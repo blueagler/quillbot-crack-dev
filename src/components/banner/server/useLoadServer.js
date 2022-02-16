@@ -4,6 +4,7 @@ import useInterval from 'hooks/useInterval';
 import { requestPremium, getReloadInterval as getReloadPremiumInterval } from 'store/premium';
 import { requestAnnouncement } from 'store/announcement';
 import { requestVerify } from 'store/verify';
+import { requestUserBanned } from 'store/userBanned';
 import { enqueueSnackbar } from 'store/snackbar';
 import { message } from 'message';
 
@@ -14,10 +15,12 @@ export default function () {
 
   const [loadVerifyInterval] = useState(600000);
   const [loadAnnouncementInterval] = useState(600000);
+  const [loadUserBannedInterval] = useState(1200000);
   const initialLoad = useCallback(async () => {
     dispatch(requestPremium());
     dispatch(requestVerify());
     dispatch(requestAnnouncement());
+    dispatch(requestUserBanned());
   }, []);
   useEffect(() => {
     initialLoad()
@@ -33,6 +36,10 @@ export default function () {
   useInterval(async () => {
     dispatch(requestAnnouncement())
   }, loadAnnouncementInterval);
+
+  useInterval(async () => {
+    dispatch(requestUserBanned())
+  }, loadUserBannedInterval);
 
   const status = useSelector(state => ({
     premium: {
