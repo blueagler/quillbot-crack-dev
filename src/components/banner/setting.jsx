@@ -3,7 +3,6 @@ import { message } from "message";
 import { Fragment } from 'preact';
 import { useState } from 'preact/hooks';
 import { useCallback } from 'preact/hooks';
-import { useStorage } from 'utils/localStorage';
 
 import IconButton from '@mui/material/IconButton';
 import Drawer from '@mui/material/Drawer';
@@ -25,30 +24,24 @@ import SettingIcon from '@mui/icons-material/Settings';
 import InfoIcon from '@mui/icons-material/Info';
 import CloseIcon from '@mui/icons-material/Close';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { toggle, getSetting } from 'store/setting';
+
 export default memo(function () {
+
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(false);
-  const [storage, setStorage] = useStorage();
 
   const handleOpen = useCallback(() => setOpen(true), []);
 
   const handleClose = useCallback(() => setOpen(false), []);
 
-  const handleToggleStorage = useCallback((id) => {
-    const newStorage = storage.settings.map(item => {
-      if (item.id === id) {
-        item.enabled = !item.enabled;
-      }
-      return item;
-    })
-    setStorage({
-      ...storage,
-      settings: newStorage
-    });
-  }, [storage]);
-
   const [tab, setTab] = useState('setting');
 
   const handleChangeTab = useCallback((_, newValue) => setTab(newValue), []);
+
+  const setting = useSelector(getSetting);
 
   return (
     <Fragment>
@@ -83,17 +76,16 @@ export default memo(function () {
           <TabPanel value="setting" sx={{ padding: 0 }}>
             <List>
               {
-                storage.settings.map(({ id, enabled, label, description }) =>
+                setting.map(({ id, disabled, label, description }) =>
                   <ListItem key={id}>
-                    <ListItemButton onClick={() => handleToggleStorage(id)}>
+                    <ListItemButton onClick={() => dispatch(toggle(id))}>
                       <ListItemText primary={label} secondary={description} />
                       <Switch
                         edge="end"
-                        checked={enabled}
+                        checked={!disabled}
                       />
                     </ListItemButton>
                   </ListItem>
-
                 )
               }
             </List>

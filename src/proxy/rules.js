@@ -1,8 +1,7 @@
 import { sentEvent } from "analytic/sentry";
 import { dialog, notify } from 'utils';
 import { message } from 'message';
-import { getStorageEnable } from 'utils/localStorage';
-import store from 'store';
+import { store } from 'store';
 
 
 export const requestHookList = [
@@ -19,12 +18,12 @@ export const requestHookList = [
     match: /rest.quillbot.com\/api\/paraphraser\/(single-paraphrase|freeze-words)/,
     overrideFunc(config) {
 
-      const hookEnabled = getStorageEnable('hook-premium-token') && store.getState().remoteConfig.premium.enabled;
+      const hookEnabled = !store.getState().setting.disabled.includes('HOOK_PREMIUM_TOKEN') && store.getState().premium.status === 'avaliable';
 
       if (hookEnabled) {
         notify(message.hookPremiumToken.success, 'success');
         config.withCredentials = false;
-        config.headers.useridtoken = store.getState().remoteConfig.premium.firebase.access_token;
+        config.headers.useridtoken = store.getState().premium.firebase.access_token;
 
       }
 
@@ -51,7 +50,7 @@ export const responseHookList = [
     overrideFunc(r) {
       r = JSON.parse(r);
 
-      const hookEnabled = getStorageEnable('hook-premium');
+      const hookEnabled = !store.getState().setting.disabled.includes('HOOK_PREMIUM')
 
       if (hookEnabled) {
         r.data.profile.premium = true;
@@ -86,8 +85,8 @@ export const responseHookList = [
       };
 
       if (rr.code === "USER_PREMIUM_FORBIDDEN") {
-        if (getStorageEnable('hook-premium-token')) {
-          if (!store.getState().remoteConfig.premium.enabled) {
+        if (!store.getState().setting.disabled.includes('HOOK_PREMIUM_TOKEN')) {
+          if (!store.getState().premium.status === 'avaliable') {
             notify(message.hookPremiumToken.unavailable, 'error');
           }
         } else {

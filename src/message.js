@@ -1,5 +1,11 @@
 export const message = {
   title: 'QuillBot Premium Crack: \r',
+  server: {
+    title: 'Remote Server Avaliability',
+    premium: 'Premium Token',
+    announcement: 'Announcement',
+    verify: 'Verify',
+  },
   loginGuide: {
     content: 'Everything is ready except login.\rDo you want to log in now?',
     yes: 'Go to login now!',
@@ -31,17 +37,19 @@ export const message = {
     },
     ignore: 'Ignore',
     close: 'Close',
+    loadFail: 'Cannot Load Announcement, please try again later',
   },
   request: {
     error: 'Can not get request data: ',
   },
   verify: {
     title: 'Quillbot Premium Crack need to verify that you\'re human',
-    guide: '<p>Please input the verification code from Telegram Group <strong>(valid for a week)</strong></p><p>Or move the slider to the given number (valid for 2 hours)<p/><p>The reason of verification is in Telegram Group<p/>',
+    guide: '<h2>Please choose one type of verifications:</h2><p>1. Input the verification code from Telegram Group <strong>(valid for a week)</strong></p><p>2. Move the slider to the given number (valid for 2 hours)<p/><p>The reason of verification is in Telegram Group<p/>',
     sliderTo: 'Move The Slider To Number: ',
     telegramBtn: 'Join Telegram Group',
     input: 'Verification Code (Recommended: once unlock, free for a week)',
     pass: 'Congratulations! You\'re human!',
+    loadFail: 'Cannot Load Verify, please try again later',
   },
   panel: {
     title: 'QuillBot Premium Crack',

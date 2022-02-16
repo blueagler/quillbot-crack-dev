@@ -1,5 +1,5 @@
 import { memo } from 'preact/compat';
-import { useCallback } from 'preact/hooks';
+import { useCallback, useMemo } from 'preact/hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -7,18 +7,19 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContentText from '@mui/material/DialogContentText';
-import { closeDialog } from 'store/dialog/action';
+import { closeDialog, getDialog } from 'store/dialog';
 
 export default memo(function () {
   const dispatch = useDispatch();
 
-  const dialog = useSelector(store => store.dialog || {});
+  const dialog = useSelector(getDialog);
+  const open = useMemo(() => !!dialog.content, [dialog.content]);
 
   const handleClose = useCallback(() => dispatch(closeDialog()), []);
 
   return (
     <Dialog
-      open={dialog.open}
+      open={open}
       onClose={handleClose}
     >
       <DialogTitle>

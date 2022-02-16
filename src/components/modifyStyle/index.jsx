@@ -1,16 +1,17 @@
 import { memo } from 'preact/compat';
 import { Fragment } from 'preact';
 import { useMemo } from 'preact/hooks';
-import { useStorage } from 'utils/localStorage';
 import GlobalStyles from '@mui/material/GlobalStyles';
+import { useSelector } from 'react-redux';
+import { getSetting } from 'store/setting';
 
 export default memo(function () {
 
-  const [storage] = useStorage();
+  const setting = useSelector(getSetting);
 
-  const styleList = useMemo(() => {
-    return {
-      'full-editor': {
+  const styleList = useMemo(() => (
+    {
+      'FULL_EDITOR': {
         '.mid-container': {
           maxWidth: '95% !important'
         },
@@ -28,14 +29,14 @@ export default memo(function () {
         }
       }
     }
-  }, []);
+  ), []);
 
   return (
     <Fragment>
       {
         Object.keys(styleList)
           .filter(key =>
-            storage.settings.find(item => item.id === key && item.enabled)
+            setting.find(item => item.id === key && !item.disabled)
           )
           .map(key => <GlobalStyles key={key} styles={styleList[key]} />)
       }

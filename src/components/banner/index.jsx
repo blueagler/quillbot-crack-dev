@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import Support from "./support";
 import Setting from "./setting";
 import Announcement from './announcement';
+import Server from './server';
 
 export default memo(function () {
 
@@ -19,6 +20,7 @@ export default memo(function () {
   return (
     <Wrapper className='mui-fixed'>
       <Support />
+      <Server />
       <Setting />
       <Announcement />
     </Wrapper>

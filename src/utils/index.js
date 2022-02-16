@@ -1,7 +1,6 @@
-import store from '../store';
-import { enqueueSnackbar } from '../store/snackbar/action';
-import { openDialog } from '../store/dialog/action';
-import { message } from '../message';
+import { store } from 'store';
+import { enqueueSnackbar } from 'store/snackbar';
+import { openDialog } from 'store/dialog';
 
 export const notify = throttle((message = '', variant = 'info') => {
   store.dispatch(
@@ -15,7 +14,7 @@ export const notify = throttle((message = '', variant = 'info') => {
 }, 2000);
 
 export function dialog({
-  title = message.title,
+  title,
   content = '',
   actions = [
     {

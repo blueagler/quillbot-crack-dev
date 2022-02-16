@@ -2,14 +2,14 @@ import { memo } from 'preact/compat';
 import { useEffect, useCallback, useState } from 'preact/hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import { removeSnackbar } from 'store/snackbar/action';
+import { removeSnackbar, getNotifications } from 'store/snackbar';
 
 export default memo(function () {
 
   let [displayed, setDisplayed] = useState([]);
 
   const dispatch = useDispatch();
-  const notifications = useSelector(store => store.snackbar.notifications || []);
+  const notifications = useSelector(getNotifications);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const storeDisplayed = useCallback((id) => {

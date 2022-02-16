@@ -1,15 +1,16 @@
 import { memo } from 'preact/compat';
 import { useEffect } from 'preact/hooks';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import { SnackbarProvider } from 'notistack';
 
-import store from 'store';
+import { store, persistor } from 'store';
 import Banner from 'components/banner';
 import Dialog from 'components/dialog';
 import Snackbar from 'components/snackbar';
 import ModifyStyle from 'components/modifyStyle';
-import RemoteConfig from 'components/remoteConfig';
+import Verify from 'components/verify';
 
 
 import { proxy, unproxy } from "./proxy";
@@ -17,6 +18,7 @@ import check from 'utils/check';
 import { init as initAnalytics } from 'analytic';
 
 export default memo(function () {
+
   useEffect(() => {
 
     check();
@@ -30,13 +32,15 @@ export default memo(function () {
 
   return (
     <Provider store={store}>
-      <SnackbarProvider maxSnack={1}>
-        <ModifyStyle />
-        <Snackbar />
-        <RemoteConfig />
-        <Dialog />
-        <Banner />
-      </SnackbarProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <SnackbarProvider maxSnack={1}>
+          <ModifyStyle />
+          <Snackbar />
+          <Verify />
+          <Dialog />
+          <Banner />
+        </SnackbarProvider>
+      </PersistGate>
     </Provider>
   )
 })

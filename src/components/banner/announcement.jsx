@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useMemo, useState, useCallback } from 'preact/hooks';
 import { memo } from 'preact/compat';
 import { Fragment } from 'preact';
@@ -26,40 +26,27 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
-import { useStorage } from 'utils/localStorage';
+import { addIgnore, getList, getIgnoredList } from 'store/announcement';
+
 import { message } from 'message';
 
 export default memo(function () {
+
+  const dispatch = useDispatch();
 
   const [popover, setPopover] = useState(null);
 
   const open = useMemo(() => !!popover, [popover]);
 
-  const [storage, setStorage] = useStorage();
-
   const handleOpen = useCallback(event => setPopover(event.currentTarget), []);
 
   const handleClose = useCallback(() => setPopover(null), []);
 
-  const announcementData = useSelector(store => store.remoteConfig.announcements || {});
+  const list = useSelector(getList);
 
-  const [list, ignoredList] = useMemo(() => {
-    if (announcementData.length > 0) {
-      const list = announcementData.filter(({ id, ignorable }) => !ignorable || !storage.announcement.ignores.includes(id));
-      const ignoredList = announcementData.filter(({ id }) => storage.announcement.ignores.includes(id));
-      return [list, ignoredList];
-    } else {
-      return [[], []];
-    }
-  }, [announcementData, storage.announcement.ignores]);
+  const amount = useMemo(() => list.filter(({ ignorable }) => ignorable).length, [list]);
 
-  const ignore = useCallback(id => setStorage({
-    ...storage,
-    announcement: {
-      ...storage.announcement,
-      ignores: [...storage.announcement.ignores, id]
-    }
-  }), [storage]);
+  const ignoredList = useSelector(getIgnoredList);
 
   const [tab, setTab] = useState('list');
 
@@ -68,7 +55,7 @@ export default memo(function () {
   return (
     <Fragment>
       <IconButton onClick={handleOpen}>
-        <Badge badgeContent={list.length} color='error'>
+        <Badge badgeContent={amount} color='error'>
           <NotificationsIcon />
         </Badge>
       </IconButton>
@@ -95,7 +82,7 @@ export default memo(function () {
           <TabPanel value="list" sx={{ padding: 0 }}>
             {
               list.length > 0 && list.map(({ id, title, content, ignorable, links }) =>
-                <Accordion key={id}>
+                <Accordion key={id} TransitionProps={{ unmountOnExit: true }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                   >
@@ -111,7 +98,7 @@ export default memo(function () {
                           links.length > 0 && links.map(({ href, text }) => <Button href={href}>{text}</Button>)
                         }
                         {
-                          ignorable && <Button onClick={() => ignore(id)}>{message.announcement.ignore}</Button>
+                          ignorable && <Button onClick={() => dispatch(addIgnore(id))}>{message.announcement.ignore}</Button>
                         }
                       </CardActions>
                     </Card>
