@@ -63,7 +63,7 @@ export default defineConfig({
     }),
     terser({
       compress: {
-        ecma: 6
+        ecma: 9
       },
       output: {
         comments: false
