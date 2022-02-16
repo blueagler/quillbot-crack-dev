@@ -53,6 +53,9 @@ export const responseHookList = [
       const isBanned = store.getState().userBanned.users.includes(r.data.email);
 
       if (isBanned) {
+        document.getElementById('InputBottomQuillControl').remove();
+        document.getElementById('inputText').remove();
+        document.getElementById('editable-content-within-article').remove();
         dialog({
           content: message.userBanned.content,
           closable: false,
