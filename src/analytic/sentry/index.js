@@ -5,10 +5,10 @@ import config from "./config";
 export async function init() {
   SentryInit(config);
 }
-export async function sentEvent(name, data) {
-  captureMessage(name, {
+export async function sentEvent(data) {
+  captureMessage(data.action, {
     contexts: {
-      body: { ...(data instanceof Object ? data : JSON.parse(data)) },
+      body: data.value
     },
     level: Severity.Info,
   });

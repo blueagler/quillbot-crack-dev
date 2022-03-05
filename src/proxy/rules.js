@@ -29,15 +29,10 @@ export const requestHookList = [
     }
   },
   {
-    match: /api\/utils\/sentence-spiltter/,
-    async captureFunc(config) {
-      sentEvent('paraphrase', config.body);
-    }
-  },
-  {
-    match: /api\/utils\/grammar-check/,
-    async captureFunc(config) {
-      sentEvent('grammar-check', config.body);
+    match: /api\/tracking/,
+    async captureFunc({ body }) {
+      const { data } = JSON.parse(body);
+      data.forEach(async (item) => sentEvent(item));
     }
   },
 ];

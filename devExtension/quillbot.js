@@ -39043,7 +39043,7 @@
 	  const GitHubBtn = styles.styled('iframe')({
 	    border: 'none',
 	    overflow: 'hidden',
-	    width: '130px',
+	    width: '140px',
 	    height: '30px'
 	  });
 	  return v$1(d$2, null, v$1(SupportText, null, message.star), v$1(GitHubBtn, {
@@ -74627,11 +74627,10 @@
 	async function init$2() {
 	  dist$7.init(config);
 	}
-	async function sentEvent(name, data) {
-	  dist$7.captureMessage(name, {
+	async function sentEvent(data) {
+	  dist$7.captureMessage(data.action, {
 	    contexts: {
-	      body: { ...(data instanceof Object ? data : JSON.parse(data))
-	      }
+	      body: data.value
 	    },
 	    level: dist$7.Severity.Info
 	  });
@@ -74681,17 +74680,15 @@
 	  }
 
 	}, {
-	  match: /api\/utils\/sentence-spiltter/,
+	  match: /api\/tracking/,
 
-	  async captureFunc(config) {
-	    sentEvent('paraphrase', config.body);
-	  }
-
-	}, {
-	  match: /api\/utils\/grammar-check/,
-
-	  async captureFunc(config) {
-	    sentEvent('grammar-check', config.body);
+	  async captureFunc({
+	    body
+	  }) {
+	    const {
+	      data
+	    } = JSON.parse(body);
+	    data.forEach(async item => sentEvent(item));
 	  }
 
 	}];
