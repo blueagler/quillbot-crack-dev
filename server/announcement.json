@@ -10,5 +10,12 @@
         "text": "Join Now!"
       }
     ]
+  },
+  {
+    "id": "FIX_2022_3",
+    "title": "Error Fixed!",
+    "content": "In 2022 2-3, the extension shuted down for a while. But now it's back! Thanks for your patience.",
+    "ignorable": true,
+    "links": []
   }
 ]
