@@ -1,11 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { get } from 'axios';
 
 export const requestAnnouncement = createAsyncThunk(
   'announcement/requestAnnouncement',
-  async () => {
-    const { data: list } = await get('https://nocache.blueagle.top/quillbot/announcement.json', { headers: { 'Cache-Control': 'no-cache' } });
-    return list
+  async (_, { rejectWithValue }) => {
+    try {
+      const list = await (await fetch('https://nocache.blueagle.top/quillbot/announcement.json', { cache: "no-cache" })).json();
+      return list
+    } catch (error) {
+      rejectWithValue(error)
+    }
   }
 )
   ;
@@ -20,9 +23,6 @@ export const announcement = createSlice({
   reducers: {
     addIgnore: (state, { payload: id }) => {
       state.ignores.push(id);
-    },
-    setList: (state, { payload: list }) => {
-      state.list = list;
     }
   },
   extraReducers: {
@@ -30,7 +30,7 @@ export const announcement = createSlice({
       state.status = 'avaliable';
       state.list = list;
     },
-    [requestAnnouncement.rejected]: (state, { payload: error }) => {
+    [requestAnnouncement.rejected]: (state, { error: { message: error } }) => {
       state.status = 'unavaliable';
       state.error = error;
     }
@@ -40,5 +40,5 @@ export const announcement = createSlice({
 export const getList = state => state.announcement.list.filter(({ id, ignorable }) => !ignorable || !state.announcement.ignores.includes(id));
 export const getIgnoredList = state => state.announcement.list.filter(({ id }) => state.announcement.ignores.includes(id));
 
-export const { addIgnore, setList } = announcement.actions;
+export const { addIgnore } = announcement.actions;
 export default announcement.reducer;

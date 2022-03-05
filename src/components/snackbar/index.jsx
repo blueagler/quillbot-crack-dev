@@ -9,7 +9,7 @@ export default memo(function () {
   let [displayed, setDisplayed] = useState([]);
 
   const dispatch = useDispatch();
-  const notifications = useSelector(getNotifications);
+  const notifications = useSelector(getNotifications ?? {});
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const storeDisplayed = useCallback((id) => {

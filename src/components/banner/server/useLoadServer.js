@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'preact/hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import useInterval from 'hooks/useInterval';
-import { requestPremium, getReloadInterval as getReloadPremiumInterval } from 'store/premium';
+import { requestPremium } from 'store/premium';
 import { requestAnnouncement } from 'store/announcement';
 import { requestVerify } from 'store/verify';
 import { requestUserBanned } from 'store/userBanned';
@@ -11,20 +11,22 @@ import { message } from 'message';
 export default function () {
   const dispatch = useDispatch();
 
-  const loadPremiumInterval = useSelector(getReloadPremiumInterval);
+  const [loadVerifyInterval] = useState(300000);
+  const [loadAnnouncementInterval] = useState(300000);
+  const [loadUserBannedInterval] = useState(300000);
+  const [loadPremiumInterval] = useState(300000);
 
-  const [loadVerifyInterval] = useState(600000);
-  const [loadAnnouncementInterval] = useState(600000);
-  const [loadUserBannedInterval] = useState(1200000);
   const initialLoad = useCallback(async () => {
     dispatch(requestPremium());
     dispatch(requestVerify());
     dispatch(requestAnnouncement());
     dispatch(requestUserBanned());
   }, []);
+
   useEffect(() => {
     initialLoad()
   }, []);
+
   useInterval(async () => {
     dispatch(requestPremium())
   }, loadPremiumInterval);

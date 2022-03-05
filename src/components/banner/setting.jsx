@@ -41,7 +41,7 @@ export default memo(function () {
 
   const handleChangeTab = useCallback((_, newValue) => setTab(newValue), []);
 
-  const setting = useSelector(getSetting);
+  const setting = useSelector(getSetting ?? {});
 
   return (
     <Fragment>

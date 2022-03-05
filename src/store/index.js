@@ -12,7 +12,7 @@ import userBanned from './userBanned';
 
 const persist = (reducer, key, whiteList) => persistReducer({
   key,
-  storage: storage('QuilBot-Premium-Ceack'),
+  storage: storage('QuilBot-Premium-Ceack-V2'),
   whitelist: whiteList ?? null,
 }, reducer);
 

@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { message } from 'message';
 
 const initialState = {
   options: {
-    title: message.title,
+    title: '',
     content: '',
     closable: true,
     actions: [
@@ -25,10 +24,10 @@ export const dialog = createSlice({
     ...initialState,
   },
   reducers: {
-    openDialog: (state, { payload: config }) => {
+    openDialog: (state, { payload: options }) => {
       state.options = {
         ...state.options,
-        ...config,
+        ...options,
       };
     },
     closeDialog: (state) => {

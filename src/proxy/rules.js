@@ -15,16 +15,14 @@ export const requestHookList = [
     }
   },
   {
-    match: /rest.quillbot.com\/api\/paraphraser\/(single-paraphrase|freeze-words)/,
+    match: /rest.quillbot.com\/api\/paraphraser\/single-paraphrase\/(0|9|10|6|8|7)/,
     overrideFunc(config) {
 
       const hookEnabled = !store.getState().setting.disabled.includes('HOOK_PREMIUM_TOKEN') && store.getState().premium.status === 'avaliable';
 
       if (hookEnabled) {
         notify(message.hookPremiumToken.success, 'success');
-        config.withCredentials = false;
-        config.headers.useridtoken = store.getState().premium.firebase.access_token;
-
+        config.headers.useridtoken = store.getState().premium.token[Math.floor(Math.random() * store.getState().premium.token.length)].idToken;
       }
 
       return config

@@ -8,11 +8,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContentText from '@mui/material/DialogContentText';
 import { closeDialog, getDialog } from 'store/dialog';
+import { message } from 'message';
 
 export default memo(function () {
   const dispatch = useDispatch();
 
-  const dialog = useSelector(getDialog);
+  const dialog = useSelector(getDialog ?? {});
   const open = useMemo(() => !!dialog.content, [dialog.content]);
 
   const handleClose = useCallback(() => dialog.closable && dispatch(closeDialog()), [dialog.closable]);
@@ -23,7 +24,7 @@ export default memo(function () {
       onClose={handleClose}
     >
       <DialogTitle>
-        {dialog.title || ''}
+        {dialog.title || message.title}
       </DialogTitle>
       <DialogContent>
         <DialogContentText>

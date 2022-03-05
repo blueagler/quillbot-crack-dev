@@ -2299,7 +2299,7 @@
 
 	var verifyPlainObject = {};
 
-	var isPlainObject$3 = {};
+	var isPlainObject$2 = {};
 
 	(function (exports) {
 
@@ -2322,7 +2322,7 @@
 
 		  return proto === baseProto;
 		}
-	} (isPlainObject$3));
+	} (isPlainObject$2));
 
 	var warning$2 = {};
 
@@ -2364,7 +2364,7 @@
 		exports.__esModule = true;
 		exports["default"] = verifyPlainObject;
 
-		var _isPlainObject = _interopRequireDefault(isPlainObject$3);
+		var _isPlainObject = _interopRequireDefault(isPlainObject$2);
 
 		var _warning = _interopRequireDefault(warning$2);
 
@@ -4094,7 +4094,7 @@
 	  info: /*#__PURE__*/React__default.createElement(InfoIcon, null)
 	};
 
-	var defaults$3 = {
+	var defaults = {
 	  maxSnack: 3,
 	  persist: false,
 	  hideIconVariant: false,
@@ -4124,7 +4124,7 @@
 
 	  if (isNumberOrNull(optionsDuration)) return optionsDuration;
 	  if (isNumberOrNull(propsDuration)) return propsDuration;
-	  return defaults$3.autoHideDuration;
+	  return defaults.autoHideDuration;
 	};
 	/**
 	 * Derives the right transitionDuration taking into account the following
@@ -4144,7 +4144,7 @@
 	  }
 
 	  if (is(optionsDuration, ['object'])) {
-	    return _extends({}, defaults$3.transitionDuration, {}, is(propsDuration, ['object']) && propsDuration, {}, optionsDuration);
+	    return _extends({}, defaults.transitionDuration, {}, is(propsDuration, ['object']) && propsDuration, {}, optionsDuration);
 	  }
 
 	  if (is(propsDuration, ['string', 'number'])) {
@@ -4152,20 +4152,20 @@
 	  }
 
 	  if (is(propsDuration, ['object'])) {
-	    return _extends({}, defaults$3.transitionDuration, {}, propsDuration);
+	    return _extends({}, defaults.transitionDuration, {}, propsDuration);
 	  }
 
-	  return defaults$3.transitionDuration;
+	  return defaults.transitionDuration;
 	};
 
-	var merge$2 = function merge(options, props) {
+	var merge$1 = function merge(options, props) {
 	  return function (name, shouldObjectMerge) {
 	    if (shouldObjectMerge === void 0) {
 	      shouldObjectMerge = false;
 	    }
 
 	    if (shouldObjectMerge) {
-	      return _extends({}, defaults$3[name], {}, props[name], {}, options[name]);
+	      return _extends({}, defaults[name], {}, props[name], {}, options[name]);
 	    }
 
 	    if (name === 'autoHideDuration') {
@@ -4176,7 +4176,7 @@
 	      return getTransitionDuration(options.transitionDuration, props.transitionDuration);
 	    }
 
-	    return options[name] || props[name] || defaults$3[name];
+	    return options[name] || props[name] || defaults[name];
 	  };
 	};
 
@@ -4997,7 +4997,7 @@
 
 	      var hasSpecifiedKey = isDefined(key);
 	      var id = hasSpecifiedKey ? key : new Date().getTime() + Math.random();
-	      var merger = merge$2(options, _this.props);
+	      var merger = merge$1(options, _this.props);
 
 	      var snack = _extends({
 	        id: id
@@ -5306,7 +5306,7 @@
 	  _createClass(SnackbarProvider, [{
 	    key: "maxSnack",
 	    get: function get() {
-	      return this.props.maxSnack || defaults$3.maxSnack;
+	      return this.props.maxSnack || defaults.maxSnack;
 	    }
 	  }]);
 
@@ -5943,7 +5943,7 @@
 	 * @param {any} obj The object to inspect.
 	 * @returns {boolean} True if the argument appears to be a plain object.
 	 */
-	function isPlainObject$2(obj) {
+	function isPlainObject$1(obj) {
 	  if (typeof obj !== 'object' || obj === null) return false;
 	  var proto = obj;
 
@@ -5972,7 +5972,7 @@
 	  }
 
 	  if (Array.isArray(val)) return 'array';
-	  if (isDate$1(val)) return 'date';
+	  if (isDate(val)) return 'date';
 	  if (isError(val)) return 'error';
 	  var constructorName = ctorName(val);
 
@@ -5998,7 +5998,7 @@
 	  return val instanceof Error || typeof val.message === 'string' && val.constructor && typeof val.constructor.stackTraceLimit === 'number';
 	}
 
-	function isDate$1(val) {
+	function isDate(val) {
 	  if (val instanceof Date) return true;
 	  return typeof val.toDateString === 'function' && typeof val.getDate === 'function' && typeof val.setDate === 'function';
 	}
@@ -6176,7 +6176,7 @@
 
 
 	  function dispatch(action) {
-	    if (!isPlainObject$2(action)) {
+	    if (!isPlainObject$1(action)) {
 	      throw new Error("Actions must be plain objects. Instead, the actual type was: '" + kindOf(action) + "'. You may need to add middleware to your store setup to handle dispatching other values, such as 'redux-thunk' to handle dispatching functions. See https://redux.js.org/tutorials/fundamentals/part-4-store#middleware and https://redux.js.org/tutorials/fundamentals/part-6-async-logic#using-the-redux-thunk-middleware for examples.");
 	    }
 
@@ -6318,7 +6318,7 @@
 	    return 'Store does not have a valid reducer. Make sure the argument passed ' + 'to combineReducers is an object whose values are reducers.';
 	  }
 
-	  if (!isPlainObject$2(inputState)) {
+	  if (!isPlainObject$1(inputState)) {
 	    return "The " + argumentName + " has unexpected type of \"" + kindOf(inputState) + "\". Expected argument to be an object with the following " + ("keys: \"" + reducerKeys.join('", "') + "\"");
 	  }
 
@@ -9876,14 +9876,14 @@
 
 	function isDraftable(value) {
 	  if (!value) return false;
-	  return isPlainObject$1(value) || Array.isArray(value) || !!value[DRAFTABLE] || !!value.constructor[DRAFTABLE] || isMap(value) || isSet(value);
+	  return isPlainObject(value) || Array.isArray(value) || !!value[DRAFTABLE] || !!value.constructor[DRAFTABLE] || isMap(value) || isSet(value);
 	}
 	var objectCtorString =
 	/*#__PURE__*/
 	Object.prototype.constructor.toString();
 
 
-	function isPlainObject$1(value) {
+	function isPlainObject(value) {
 	  if (!value || typeof value !== "object") return false;
 	  var proto = Object.getPrototypeOf(value);
 
@@ -13605,1967 +13605,17 @@
 	  dist$9.exports = reduxToolkit_cjs_development;
 	}
 
-	var axios$2 = {exports: {}};
-
-	var bind$2 = function bind(fn, thisArg) {
-	  return function wrap() {
-	    var args = new Array(arguments.length);
-	    for (var i = 0; i < args.length; i++) {
-	      args[i] = arguments[i];
-	    }
-	    return fn.apply(thisArg, args);
-	  };
-	};
-
-	var bind$1 = bind$2;
-
-	// utils is a library of generic helper functions non-specific to axios
-
-	var toString = Object.prototype.toString;
-
-	/**
-	 * Determine if a value is an Array
-	 *
-	 * @param {Object} val The value to test
-	 * @returns {boolean} True if value is an Array, otherwise false
-	 */
-	function isArray(val) {
-	  return Array.isArray(val);
-	}
-
-	/**
-	 * Determine if a value is undefined
-	 *
-	 * @param {Object} val The value to test
-	 * @returns {boolean} True if the value is undefined, otherwise false
-	 */
-	function isUndefined(val) {
-	  return typeof val === 'undefined';
-	}
-
-	/**
-	 * Determine if a value is a Buffer
-	 *
-	 * @param {Object} val The value to test
-	 * @returns {boolean} True if value is a Buffer, otherwise false
-	 */
-	function isBuffer(val) {
-	  return val !== null && !isUndefined(val) && val.constructor !== null && !isUndefined(val.constructor)
-	    && typeof val.constructor.isBuffer === 'function' && val.constructor.isBuffer(val);
-	}
-
-	/**
-	 * Determine if a value is an ArrayBuffer
-	 *
-	 * @param {Object} val The value to test
-	 * @returns {boolean} True if value is an ArrayBuffer, otherwise false
-	 */
-	function isArrayBuffer(val) {
-	  return toString.call(val) === '[object ArrayBuffer]';
-	}
-
-	/**
-	 * Determine if a value is a FormData
-	 *
-	 * @param {Object} val The value to test
-	 * @returns {boolean} True if value is an FormData, otherwise false
-	 */
-	function isFormData(val) {
-	  return toString.call(val) === '[object FormData]';
-	}
-
-	/**
-	 * Determine if a value is a view on an ArrayBuffer
-	 *
-	 * @param {Object} val The value to test
-	 * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
-	 */
-	function isArrayBufferView(val) {
-	  var result;
-	  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
-	    result = ArrayBuffer.isView(val);
-	  } else {
-	    result = (val) && (val.buffer) && (isArrayBuffer(val.buffer));
-	  }
-	  return result;
-	}
-
-	/**
-	 * Determine if a value is a String
-	 *
-	 * @param {Object} val The value to test
-	 * @returns {boolean} True if value is a String, otherwise false
-	 */
-	function isString(val) {
-	  return typeof val === 'string';
-	}
-
-	/**
-	 * Determine if a value is a Number
-	 *
-	 * @param {Object} val The value to test
-	 * @returns {boolean} True if value is a Number, otherwise false
-	 */
-	function isNumber(val) {
-	  return typeof val === 'number';
-	}
-
-	/**
-	 * Determine if a value is an Object
-	 *
-	 * @param {Object} val The value to test
-	 * @returns {boolean} True if value is an Object, otherwise false
-	 */
-	function isObject(val) {
-	  return val !== null && typeof val === 'object';
-	}
-
-	/**
-	 * Determine if a value is a plain Object
-	 *
-	 * @param {Object} val The value to test
-	 * @return {boolean} True if value is a plain Object, otherwise false
-	 */
-	function isPlainObject(val) {
-	  if (toString.call(val) !== '[object Object]') {
-	    return false;
-	  }
-
-	  var prototype = Object.getPrototypeOf(val);
-	  return prototype === null || prototype === Object.prototype;
-	}
-
-	/**
-	 * Determine if a value is a Date
-	 *
-	 * @param {Object} val The value to test
-	 * @returns {boolean} True if value is a Date, otherwise false
-	 */
-	function isDate(val) {
-	  return toString.call(val) === '[object Date]';
-	}
-
-	/**
-	 * Determine if a value is a File
-	 *
-	 * @param {Object} val The value to test
-	 * @returns {boolean} True if value is a File, otherwise false
-	 */
-	function isFile(val) {
-	  return toString.call(val) === '[object File]';
-	}
-
-	/**
-	 * Determine if a value is a Blob
-	 *
-	 * @param {Object} val The value to test
-	 * @returns {boolean} True if value is a Blob, otherwise false
-	 */
-	function isBlob(val) {
-	  return toString.call(val) === '[object Blob]';
-	}
-
-	/**
-	 * Determine if a value is a Function
-	 *
-	 * @param {Object} val The value to test
-	 * @returns {boolean} True if value is a Function, otherwise false
-	 */
-	function isFunction(val) {
-	  return toString.call(val) === '[object Function]';
-	}
-
-	/**
-	 * Determine if a value is a Stream
-	 *
-	 * @param {Object} val The value to test
-	 * @returns {boolean} True if value is a Stream, otherwise false
-	 */
-	function isStream(val) {
-	  return isObject(val) && isFunction(val.pipe);
-	}
-
-	/**
-	 * Determine if a value is a URLSearchParams object
-	 *
-	 * @param {Object} val The value to test
-	 * @returns {boolean} True if value is a URLSearchParams object, otherwise false
-	 */
-	function isURLSearchParams(val) {
-	  return toString.call(val) === '[object URLSearchParams]';
-	}
-
-	/**
-	 * Trim excess whitespace off the beginning and end of a string
-	 *
-	 * @param {String} str The String to trim
-	 * @returns {String} The String freed of excess whitespace
-	 */
-	function trim$1(str) {
-	  return str.trim ? str.trim() : str.replace(/^\s+|\s+$/g, '');
-	}
-
-	/**
-	 * Determine if we're running in a standard browser environment
-	 *
-	 * This allows axios to run in a web worker, and react-native.
-	 * Both environments support XMLHttpRequest, but not fully standard globals.
-	 *
-	 * web workers:
-	 *  typeof window -> undefined
-	 *  typeof document -> undefined
-	 *
-	 * react-native:
-	 *  navigator.product -> 'ReactNative'
-	 * nativescript
-	 *  navigator.product -> 'NativeScript' or 'NS'
-	 */
-	function isStandardBrowserEnv() {
-	  if (typeof navigator !== 'undefined' && (navigator.product === 'ReactNative' ||
-	                                           navigator.product === 'NativeScript' ||
-	                                           navigator.product === 'NS')) {
-	    return false;
-	  }
-	  return (
-	    typeof window !== 'undefined' &&
-	    typeof document !== 'undefined'
-	  );
-	}
-
-	/**
-	 * Iterate over an Array or an Object invoking a function for each item.
-	 *
-	 * If `obj` is an Array callback will be called passing
-	 * the value, index, and complete array for each item.
-	 *
-	 * If 'obj' is an Object callback will be called passing
-	 * the value, key, and complete object for each property.
-	 *
-	 * @param {Object|Array} obj The object to iterate
-	 * @param {Function} fn The callback to invoke for each item
-	 */
-	function forEach(obj, fn) {
-	  // Don't bother if no value provided
-	  if (obj === null || typeof obj === 'undefined') {
-	    return;
-	  }
-
-	  // Force an array if not already something iterable
-	  if (typeof obj !== 'object') {
-	    /*eslint no-param-reassign:0*/
-	    obj = [obj];
-	  }
-
-	  if (isArray(obj)) {
-	    // Iterate over array values
-	    for (var i = 0, l = obj.length; i < l; i++) {
-	      fn.call(null, obj[i], i, obj);
-	    }
-	  } else {
-	    // Iterate over object keys
-	    for (var key in obj) {
-	      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-	        fn.call(null, obj[key], key, obj);
-	      }
-	    }
-	  }
-	}
-
-	/**
-	 * Accepts varargs expecting each argument to be an object, then
-	 * immutably merges the properties of each object and returns result.
-	 *
-	 * When multiple objects contain the same key the later object in
-	 * the arguments list will take precedence.
-	 *
-	 * Example:
-	 *
-	 * ```js
-	 * var result = merge({foo: 123}, {foo: 456});
-	 * console.log(result.foo); // outputs 456
-	 * ```
-	 *
-	 * @param {Object} obj1 Object to merge
-	 * @returns {Object} Result of all merge properties
-	 */
-	function merge$1(/* obj1, obj2, obj3, ... */) {
-	  var result = {};
-	  function assignValue(val, key) {
-	    if (isPlainObject(result[key]) && isPlainObject(val)) {
-	      result[key] = merge$1(result[key], val);
-	    } else if (isPlainObject(val)) {
-	      result[key] = merge$1({}, val);
-	    } else if (isArray(val)) {
-	      result[key] = val.slice();
-	    } else {
-	      result[key] = val;
-	    }
-	  }
-
-	  for (var i = 0, l = arguments.length; i < l; i++) {
-	    forEach(arguments[i], assignValue);
-	  }
-	  return result;
-	}
-
-	/**
-	 * Extends object a by mutably adding to it the properties of object b.
-	 *
-	 * @param {Object} a The object to be extended
-	 * @param {Object} b The object to copy properties from
-	 * @param {Object} thisArg The object to bind function to
-	 * @return {Object} The resulting value of object a
-	 */
-	function extend(a, b, thisArg) {
-	  forEach(b, function assignValue(val, key) {
-	    if (thisArg && typeof val === 'function') {
-	      a[key] = bind$1(val, thisArg);
-	    } else {
-	      a[key] = val;
-	    }
-	  });
-	  return a;
-	}
-
-	/**
-	 * Remove byte order marker. This catches EF BB BF (the UTF-8 BOM)
-	 *
-	 * @param {string} content with BOM
-	 * @return {string} content value without BOM
-	 */
-	function stripBOM(content) {
-	  if (content.charCodeAt(0) === 0xFEFF) {
-	    content = content.slice(1);
-	  }
-	  return content;
-	}
-
-	var utils$f = {
-	  isArray: isArray,
-	  isArrayBuffer: isArrayBuffer,
-	  isBuffer: isBuffer,
-	  isFormData: isFormData,
-	  isArrayBufferView: isArrayBufferView,
-	  isString: isString,
-	  isNumber: isNumber,
-	  isObject: isObject,
-	  isPlainObject: isPlainObject,
-	  isUndefined: isUndefined,
-	  isDate: isDate,
-	  isFile: isFile,
-	  isBlob: isBlob,
-	  isFunction: isFunction,
-	  isStream: isStream,
-	  isURLSearchParams: isURLSearchParams,
-	  isStandardBrowserEnv: isStandardBrowserEnv,
-	  forEach: forEach,
-	  merge: merge$1,
-	  extend: extend,
-	  trim: trim$1,
-	  stripBOM: stripBOM
-	};
-
-	var utils$e = utils$f;
-
-	function encode(val) {
-	  return encodeURIComponent(val).
-	    replace(/%3A/gi, ':').
-	    replace(/%24/g, '$').
-	    replace(/%2C/gi, ',').
-	    replace(/%20/g, '+').
-	    replace(/%5B/gi, '[').
-	    replace(/%5D/gi, ']');
-	}
-
-	/**
-	 * Build a URL by appending params to the end
-	 *
-	 * @param {string} url The base of the url (e.g., http://www.google.com)
-	 * @param {object} [params] The params to be appended
-	 * @returns {string} The formatted url
-	 */
-	var buildURL$1 = function buildURL(url, params, paramsSerializer) {
-	  /*eslint no-param-reassign:0*/
-	  if (!params) {
-	    return url;
-	  }
-
-	  var serializedParams;
-	  if (paramsSerializer) {
-	    serializedParams = paramsSerializer(params);
-	  } else if (utils$e.isURLSearchParams(params)) {
-	    serializedParams = params.toString();
-	  } else {
-	    var parts = [];
-
-	    utils$e.forEach(params, function serialize(val, key) {
-	      if (val === null || typeof val === 'undefined') {
-	        return;
-	      }
-
-	      if (utils$e.isArray(val)) {
-	        key = key + '[]';
-	      } else {
-	        val = [val];
-	      }
-
-	      utils$e.forEach(val, function parseValue(v) {
-	        if (utils$e.isDate(v)) {
-	          v = v.toISOString();
-	        } else if (utils$e.isObject(v)) {
-	          v = JSON.stringify(v);
-	        }
-	        parts.push(encode(key) + '=' + encode(v));
-	      });
-	    });
-
-	    serializedParams = parts.join('&');
-	  }
-
-	  if (serializedParams) {
-	    var hashmarkIndex = url.indexOf('#');
-	    if (hashmarkIndex !== -1) {
-	      url = url.slice(0, hashmarkIndex);
-	    }
-
-	    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
-	  }
-
-	  return url;
-	};
-
-	var utils$d = utils$f;
-
-	function InterceptorManager$1() {
-	  this.handlers = [];
-	}
-
-	/**
-	 * Add a new interceptor to the stack
-	 *
-	 * @param {Function} fulfilled The function to handle `then` for a `Promise`
-	 * @param {Function} rejected The function to handle `reject` for a `Promise`
-	 *
-	 * @return {Number} An ID used to remove interceptor later
-	 */
-	InterceptorManager$1.prototype.use = function use(fulfilled, rejected, options) {
-	  this.handlers.push({
-	    fulfilled: fulfilled,
-	    rejected: rejected,
-	    synchronous: options ? options.synchronous : false,
-	    runWhen: options ? options.runWhen : null
-	  });
-	  return this.handlers.length - 1;
-	};
-
-	/**
-	 * Remove an interceptor from the stack
-	 *
-	 * @param {Number} id The ID that was returned by `use`
-	 */
-	InterceptorManager$1.prototype.eject = function eject(id) {
-	  if (this.handlers[id]) {
-	    this.handlers[id] = null;
-	  }
-	};
-
-	/**
-	 * Iterate over all the registered interceptors
-	 *
-	 * This method is particularly useful for skipping over any
-	 * interceptors that may have become `null` calling `eject`.
-	 *
-	 * @param {Function} fn The function to call for each interceptor
-	 */
-	InterceptorManager$1.prototype.forEach = function forEach(fn) {
-	  utils$d.forEach(this.handlers, function forEachHandler(h) {
-	    if (h !== null) {
-	      fn(h);
-	    }
-	  });
-	};
-
-	var InterceptorManager_1 = InterceptorManager$1;
-
-	var utils$c = utils$f;
-
-	var normalizeHeaderName = function normalizeHeaderName(headers, normalizedName) {
-	  utils$c.forEach(headers, function processHeader(value, name) {
-	    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
-	      headers[normalizedName] = value;
-	      delete headers[name];
-	    }
-	  });
-	};
-
-	/**
-	 * Update an Error with the specified config, error code, and response.
-	 *
-	 * @param {Error} error The error to update.
-	 * @param {Object} config The config.
-	 * @param {string} [code] The error code (for example, 'ECONNABORTED').
-	 * @param {Object} [request] The request.
-	 * @param {Object} [response] The response.
-	 * @returns {Error} The error.
-	 */
-	var enhanceError = function enhanceError(error, config, code, request, response) {
-	  error.config = config;
-	  if (code) {
-	    error.code = code;
-	  }
-
-	  error.request = request;
-	  error.response = response;
-	  error.isAxiosError = true;
-
-	  error.toJSON = function toJSON() {
-	    return {
-	      // Standard
-	      message: this.message,
-	      name: this.name,
-	      // Microsoft
-	      description: this.description,
-	      number: this.number,
-	      // Mozilla
-	      fileName: this.fileName,
-	      lineNumber: this.lineNumber,
-	      columnNumber: this.columnNumber,
-	      stack: this.stack,
-	      // Axios
-	      config: this.config,
-	      code: this.code,
-	      status: this.response && this.response.status ? this.response.status : null
-	    };
-	  };
-	  return error;
-	};
-
-	var createError;
-	var hasRequiredCreateError;
-
-	function requireCreateError () {
-		if (hasRequiredCreateError) return createError;
-		hasRequiredCreateError = 1;
-
-		var enhanceError$1 = enhanceError;
-
-		/**
-		 * Create an Error with the specified message, config, error code, request and response.
-		 *
-		 * @param {string} message The error message.
-		 * @param {Object} config The config.
-		 * @param {string} [code] The error code (for example, 'ECONNABORTED').
-		 * @param {Object} [request] The request.
-		 * @param {Object} [response] The response.
-		 * @returns {Error} The created error.
-		 */
-		createError = function createError(message, config, code, request, response) {
-		  var error = new Error(message);
-		  return enhanceError$1(error, config, code, request, response);
-		};
-		return createError;
-	}
-
-	var settle;
-	var hasRequiredSettle;
-
-	function requireSettle () {
-		if (hasRequiredSettle) return settle;
-		hasRequiredSettle = 1;
-
-		var createError = requireCreateError();
-
-		/**
-		 * Resolve or reject a Promise based on response status.
-		 *
-		 * @param {Function} resolve A function that resolves the promise.
-		 * @param {Function} reject A function that rejects the promise.
-		 * @param {object} response The response.
-		 */
-		settle = function settle(resolve, reject, response) {
-		  var validateStatus = response.config.validateStatus;
-		  if (!response.status || !validateStatus || validateStatus(response.status)) {
-		    resolve(response);
-		  } else {
-		    reject(createError(
-		      'Request failed with status code ' + response.status,
-		      response.config,
-		      null,
-		      response.request,
-		      response
-		    ));
-		  }
-		};
-		return settle;
-	}
-
-	var cookies;
-	var hasRequiredCookies;
-
-	function requireCookies () {
-		if (hasRequiredCookies) return cookies;
-		hasRequiredCookies = 1;
-
-		var utils = utils$f;
-
-		cookies = (
-		  utils.isStandardBrowserEnv() ?
-
-		  // Standard browser envs support document.cookie
-		    (function standardBrowserEnv() {
-		      return {
-		        write: function write(name, value, expires, path, domain, secure) {
-		          var cookie = [];
-		          cookie.push(name + '=' + encodeURIComponent(value));
-
-		          if (utils.isNumber(expires)) {
-		            cookie.push('expires=' + new Date(expires).toGMTString());
-		          }
-
-		          if (utils.isString(path)) {
-		            cookie.push('path=' + path);
-		          }
-
-		          if (utils.isString(domain)) {
-		            cookie.push('domain=' + domain);
-		          }
-
-		          if (secure === true) {
-		            cookie.push('secure');
-		          }
-
-		          document.cookie = cookie.join('; ');
-		        },
-
-		        read: function read(name) {
-		          var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
-		          return (match ? decodeURIComponent(match[3]) : null);
-		        },
-
-		        remove: function remove(name) {
-		          this.write(name, '', Date.now() - 86400000);
-		        }
-		      };
-		    })() :
-
-		  // Non standard browser env (web workers, react-native) lack needed support.
-		    (function nonStandardBrowserEnv() {
-		      return {
-		        write: function write() {},
-		        read: function read() { return null; },
-		        remove: function remove() {}
-		      };
-		    })()
-		);
-		return cookies;
-	}
-
-	var isAbsoluteURL;
-	var hasRequiredIsAbsoluteURL;
-
-	function requireIsAbsoluteURL () {
-		if (hasRequiredIsAbsoluteURL) return isAbsoluteURL;
-		hasRequiredIsAbsoluteURL = 1;
-
-		/**
-		 * Determines whether the specified URL is absolute
-		 *
-		 * @param {string} url The URL to test
-		 * @returns {boolean} True if the specified URL is absolute, otherwise false
-		 */
-		isAbsoluteURL = function isAbsoluteURL(url) {
-		  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
-		  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
-		  // by any combination of letters, digits, plus, period, or hyphen.
-		  return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(url);
-		};
-		return isAbsoluteURL;
-	}
-
-	var combineURLs;
-	var hasRequiredCombineURLs;
-
-	function requireCombineURLs () {
-		if (hasRequiredCombineURLs) return combineURLs;
-		hasRequiredCombineURLs = 1;
-
-		/**
-		 * Creates a new URL by combining the specified URLs
-		 *
-		 * @param {string} baseURL The base URL
-		 * @param {string} relativeURL The relative URL
-		 * @returns {string} The combined URL
-		 */
-		combineURLs = function combineURLs(baseURL, relativeURL) {
-		  return relativeURL
-		    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
-		    : baseURL;
-		};
-		return combineURLs;
-	}
-
-	var buildFullPath;
-	var hasRequiredBuildFullPath;
-
-	function requireBuildFullPath () {
-		if (hasRequiredBuildFullPath) return buildFullPath;
-		hasRequiredBuildFullPath = 1;
-
-		var isAbsoluteURL = requireIsAbsoluteURL();
-		var combineURLs = requireCombineURLs();
-
-		/**
-		 * Creates a new URL by combining the baseURL with the requestedURL,
-		 * only when the requestedURL is not already an absolute URL.
-		 * If the requestURL is absolute, this function returns the requestedURL untouched.
-		 *
-		 * @param {string} baseURL The base URL
-		 * @param {string} requestedURL Absolute or relative URL to combine
-		 * @returns {string} The combined full path
-		 */
-		buildFullPath = function buildFullPath(baseURL, requestedURL) {
-		  if (baseURL && !isAbsoluteURL(requestedURL)) {
-		    return combineURLs(baseURL, requestedURL);
-		  }
-		  return requestedURL;
-		};
-		return buildFullPath;
-	}
-
-	var parseHeaders;
-	var hasRequiredParseHeaders;
-
-	function requireParseHeaders () {
-		if (hasRequiredParseHeaders) return parseHeaders;
-		hasRequiredParseHeaders = 1;
-
-		var utils = utils$f;
-
-		// Headers whose duplicates are ignored by node
-		// c.f. https://nodejs.org/api/http.html#http_message_headers
-		var ignoreDuplicateOf = [
-		  'age', 'authorization', 'content-length', 'content-type', 'etag',
-		  'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since',
-		  'last-modified', 'location', 'max-forwards', 'proxy-authorization',
-		  'referer', 'retry-after', 'user-agent'
-		];
-
-		/**
-		 * Parse headers into an object
-		 *
-		 * ```
-		 * Date: Wed, 27 Aug 2014 08:58:49 GMT
-		 * Content-Type: application/json
-		 * Connection: keep-alive
-		 * Transfer-Encoding: chunked
-		 * ```
-		 *
-		 * @param {String} headers Headers needing to be parsed
-		 * @returns {Object} Headers parsed into an object
-		 */
-		parseHeaders = function parseHeaders(headers) {
-		  var parsed = {};
-		  var key;
-		  var val;
-		  var i;
-
-		  if (!headers) { return parsed; }
-
-		  utils.forEach(headers.split('\n'), function parser(line) {
-		    i = line.indexOf(':');
-		    key = utils.trim(line.substr(0, i)).toLowerCase();
-		    val = utils.trim(line.substr(i + 1));
-
-		    if (key) {
-		      if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
-		        return;
-		      }
-		      if (key === 'set-cookie') {
-		        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
-		      } else {
-		        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
-		      }
-		    }
-		  });
-
-		  return parsed;
-		};
-		return parseHeaders;
-	}
-
-	var isURLSameOrigin;
-	var hasRequiredIsURLSameOrigin;
-
-	function requireIsURLSameOrigin () {
-		if (hasRequiredIsURLSameOrigin) return isURLSameOrigin;
-		hasRequiredIsURLSameOrigin = 1;
-
-		var utils = utils$f;
-
-		isURLSameOrigin = (
-		  utils.isStandardBrowserEnv() ?
-
-		  // Standard browser envs have full support of the APIs needed to test
-		  // whether the request URL is of the same origin as current location.
-		    (function standardBrowserEnv() {
-		      var msie = /(msie|trident)/i.test(navigator.userAgent);
-		      var urlParsingNode = document.createElement('a');
-		      var originURL;
-
-		      /**
-		    * Parse a URL to discover it's components
-		    *
-		    * @param {String} url The URL to be parsed
-		    * @returns {Object}
-		    */
-		      function resolveURL(url) {
-		        var href = url;
-
-		        if (msie) {
-		        // IE needs attribute set twice to normalize properties
-		          urlParsingNode.setAttribute('href', href);
-		          href = urlParsingNode.href;
-		        }
-
-		        urlParsingNode.setAttribute('href', href);
-
-		        // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
-		        return {
-		          href: urlParsingNode.href,
-		          protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
-		          host: urlParsingNode.host,
-		          search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
-		          hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
-		          hostname: urlParsingNode.hostname,
-		          port: urlParsingNode.port,
-		          pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
-		            urlParsingNode.pathname :
-		            '/' + urlParsingNode.pathname
-		        };
-		      }
-
-		      originURL = resolveURL(window.location.href);
-
-		      /**
-		    * Determine if a URL shares the same origin as the current location
-		    *
-		    * @param {String} requestURL The URL to test
-		    * @returns {boolean} True if URL shares the same origin, otherwise false
-		    */
-		      return function isURLSameOrigin(requestURL) {
-		        var parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
-		        return (parsed.protocol === originURL.protocol &&
-		            parsed.host === originURL.host);
-		      };
-		    })() :
-
-		  // Non standard browser envs (web workers, react-native) lack needed support.
-		    (function nonStandardBrowserEnv() {
-		      return function isURLSameOrigin() {
-		        return true;
-		      };
-		    })()
-		);
-		return isURLSameOrigin;
-	}
-
-	var Cancel_1;
-	var hasRequiredCancel;
-
-	function requireCancel () {
-		if (hasRequiredCancel) return Cancel_1;
-		hasRequiredCancel = 1;
-
-		/**
-		 * A `Cancel` is an object that is thrown when an operation is canceled.
-		 *
-		 * @class
-		 * @param {string=} message The message.
-		 */
-		function Cancel(message) {
-		  this.message = message;
-		}
-
-		Cancel.prototype.toString = function toString() {
-		  return 'Cancel' + (this.message ? ': ' + this.message : '');
-		};
-
-		Cancel.prototype.__CANCEL__ = true;
-
-		Cancel_1 = Cancel;
-		return Cancel_1;
-	}
-
-	var xhr$1;
-	var hasRequiredXhr$1;
-
-	function requireXhr$1 () {
-		if (hasRequiredXhr$1) return xhr$1;
-		hasRequiredXhr$1 = 1;
-
-		var utils = utils$f;
-		var settle = requireSettle();
-		var cookies = requireCookies();
-		var buildURL = buildURL$1;
-		var buildFullPath = requireBuildFullPath();
-		var parseHeaders = requireParseHeaders();
-		var isURLSameOrigin = requireIsURLSameOrigin();
-		var createError = requireCreateError();
-		var defaults = requireDefaults();
-		var Cancel = requireCancel();
-
-		xhr$1 = function xhrAdapter(config) {
-		  return new Promise(function dispatchXhrRequest(resolve, reject) {
-		    var requestData = config.data;
-		    var requestHeaders = config.headers;
-		    var responseType = config.responseType;
-		    var onCanceled;
-		    function done() {
-		      if (config.cancelToken) {
-		        config.cancelToken.unsubscribe(onCanceled);
-		      }
-
-		      if (config.signal) {
-		        config.signal.removeEventListener('abort', onCanceled);
-		      }
-		    }
-
-		    if (utils.isFormData(requestData)) {
-		      delete requestHeaders['Content-Type']; // Let the browser set it
-		    }
-
-		    var request = new XMLHttpRequest();
-
-		    // HTTP basic authentication
-		    if (config.auth) {
-		      var username = config.auth.username || '';
-		      var password = config.auth.password ? unescape(encodeURIComponent(config.auth.password)) : '';
-		      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
-		    }
-
-		    var fullPath = buildFullPath(config.baseURL, config.url);
-		    request.open(config.method.toUpperCase(), buildURL(fullPath, config.params, config.paramsSerializer), true);
-
-		    // Set the request timeout in MS
-		    request.timeout = config.timeout;
-
-		    function onloadend() {
-		      if (!request) {
-		        return;
-		      }
-		      // Prepare the response
-		      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
-		      var responseData = !responseType || responseType === 'text' ||  responseType === 'json' ?
-		        request.responseText : request.response;
-		      var response = {
-		        data: responseData,
-		        status: request.status,
-		        statusText: request.statusText,
-		        headers: responseHeaders,
-		        config: config,
-		        request: request
-		      };
-
-		      settle(function _resolve(value) {
-		        resolve(value);
-		        done();
-		      }, function _reject(err) {
-		        reject(err);
-		        done();
-		      }, response);
-
-		      // Clean up request
-		      request = null;
-		    }
-
-		    if ('onloadend' in request) {
-		      // Use onloadend if available
-		      request.onloadend = onloadend;
-		    } else {
-		      // Listen for ready state to emulate onloadend
-		      request.onreadystatechange = function handleLoad() {
-		        if (!request || request.readyState !== 4) {
-		          return;
-		        }
-
-		        // The request errored out and we didn't get a response, this will be
-		        // handled by onerror instead
-		        // With one exception: request that using file: protocol, most browsers
-		        // will return status as 0 even though it's a successful request
-		        if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
-		          return;
-		        }
-		        // readystate handler is calling before onerror or ontimeout handlers,
-		        // so we should call onloadend on the next 'tick'
-		        setTimeout(onloadend);
-		      };
-		    }
-
-		    // Handle browser request cancellation (as opposed to a manual cancellation)
-		    request.onabort = function handleAbort() {
-		      if (!request) {
-		        return;
-		      }
-
-		      reject(createError('Request aborted', config, 'ECONNABORTED', request));
-
-		      // Clean up request
-		      request = null;
-		    };
-
-		    // Handle low level network errors
-		    request.onerror = function handleError() {
-		      // Real errors are hidden from us by the browser
-		      // onerror should only fire if it's a network error
-		      reject(createError('Network Error', config, null, request));
-
-		      // Clean up request
-		      request = null;
-		    };
-
-		    // Handle timeout
-		    request.ontimeout = function handleTimeout() {
-		      var timeoutErrorMessage = config.timeout ? 'timeout of ' + config.timeout + 'ms exceeded' : 'timeout exceeded';
-		      var transitional = config.transitional || defaults.transitional;
-		      if (config.timeoutErrorMessage) {
-		        timeoutErrorMessage = config.timeoutErrorMessage;
-		      }
-		      reject(createError(
-		        timeoutErrorMessage,
-		        config,
-		        transitional.clarifyTimeoutError ? 'ETIMEDOUT' : 'ECONNABORTED',
-		        request));
-
-		      // Clean up request
-		      request = null;
-		    };
-
-		    // Add xsrf header
-		    // This is only done if running in a standard browser environment.
-		    // Specifically not if we're in a web worker, or react-native.
-		    if (utils.isStandardBrowserEnv()) {
-		      // Add xsrf header
-		      var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ?
-		        cookies.read(config.xsrfCookieName) :
-		        undefined;
-
-		      if (xsrfValue) {
-		        requestHeaders[config.xsrfHeaderName] = xsrfValue;
-		      }
-		    }
-
-		    // Add headers to the request
-		    if ('setRequestHeader' in request) {
-		      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
-		        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
-		          // Remove Content-Type if data is undefined
-		          delete requestHeaders[key];
-		        } else {
-		          // Otherwise add header to the request
-		          request.setRequestHeader(key, val);
-		        }
-		      });
-		    }
-
-		    // Add withCredentials to request if needed
-		    if (!utils.isUndefined(config.withCredentials)) {
-		      request.withCredentials = !!config.withCredentials;
-		    }
-
-		    // Add responseType to request if needed
-		    if (responseType && responseType !== 'json') {
-		      request.responseType = config.responseType;
-		    }
-
-		    // Handle progress if needed
-		    if (typeof config.onDownloadProgress === 'function') {
-		      request.addEventListener('progress', config.onDownloadProgress);
-		    }
-
-		    // Not all browsers support upload events
-		    if (typeof config.onUploadProgress === 'function' && request.upload) {
-		      request.upload.addEventListener('progress', config.onUploadProgress);
-		    }
-
-		    if (config.cancelToken || config.signal) {
-		      // Handle cancellation
-		      // eslint-disable-next-line func-names
-		      onCanceled = function(cancel) {
-		        if (!request) {
-		          return;
-		        }
-		        reject(!cancel || (cancel && cancel.type) ? new Cancel('canceled') : cancel);
-		        request.abort();
-		        request = null;
-		      };
-
-		      config.cancelToken && config.cancelToken.subscribe(onCanceled);
-		      if (config.signal) {
-		        config.signal.aborted ? onCanceled() : config.signal.addEventListener('abort', onCanceled);
-		      }
-		    }
-
-		    if (!requestData) {
-		      requestData = null;
-		    }
-
-		    // Send the request
-		    request.send(requestData);
-		  });
-		};
-		return xhr$1;
-	}
-
-	var defaults_1;
-	var hasRequiredDefaults;
-
-	function requireDefaults () {
-		if (hasRequiredDefaults) return defaults_1;
-		hasRequiredDefaults = 1;
-
-		var utils = utils$f;
-		var normalizeHeaderName$1 = normalizeHeaderName;
-		var enhanceError$1 = enhanceError;
-
-		var DEFAULT_CONTENT_TYPE = {
-		  'Content-Type': 'application/x-www-form-urlencoded'
-		};
-
-		function setContentTypeIfUnset(headers, value) {
-		  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-		    headers['Content-Type'] = value;
-		  }
-		}
-
-		function getDefaultAdapter() {
-		  var adapter;
-		  if (typeof XMLHttpRequest !== 'undefined') {
-		    // For browsers use XHR adapter
-		    adapter = requireXhr$1();
-		  } else if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
-		    // For node use HTTP adapter
-		    adapter = requireXhr$1();
-		  }
-		  return adapter;
-		}
-
-		function stringifySafely(rawValue, parser, encoder) {
-		  if (utils.isString(rawValue)) {
-		    try {
-		      (parser || JSON.parse)(rawValue);
-		      return utils.trim(rawValue);
-		    } catch (e) {
-		      if (e.name !== 'SyntaxError') {
-		        throw e;
-		      }
-		    }
-		  }
-
-		  return (encoder || JSON.stringify)(rawValue);
-		}
-
-		var defaults = {
-
-		  transitional: {
-		    silentJSONParsing: true,
-		    forcedJSONParsing: true,
-		    clarifyTimeoutError: false
-		  },
-
-		  adapter: getDefaultAdapter(),
-
-		  transformRequest: [function transformRequest(data, headers) {
-		    normalizeHeaderName$1(headers, 'Accept');
-		    normalizeHeaderName$1(headers, 'Content-Type');
-
-		    if (utils.isFormData(data) ||
-		      utils.isArrayBuffer(data) ||
-		      utils.isBuffer(data) ||
-		      utils.isStream(data) ||
-		      utils.isFile(data) ||
-		      utils.isBlob(data)
-		    ) {
-		      return data;
-		    }
-		    if (utils.isArrayBufferView(data)) {
-		      return data.buffer;
-		    }
-		    if (utils.isURLSearchParams(data)) {
-		      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-		      return data.toString();
-		    }
-		    if (utils.isObject(data) || (headers && headers['Content-Type'] === 'application/json')) {
-		      setContentTypeIfUnset(headers, 'application/json');
-		      return stringifySafely(data);
-		    }
-		    return data;
-		  }],
-
-		  transformResponse: [function transformResponse(data) {
-		    var transitional = this.transitional || defaults.transitional;
-		    var silentJSONParsing = transitional && transitional.silentJSONParsing;
-		    var forcedJSONParsing = transitional && transitional.forcedJSONParsing;
-		    var strictJSONParsing = !silentJSONParsing && this.responseType === 'json';
-
-		    if (strictJSONParsing || (forcedJSONParsing && utils.isString(data) && data.length)) {
-		      try {
-		        return JSON.parse(data);
-		      } catch (e) {
-		        if (strictJSONParsing) {
-		          if (e.name === 'SyntaxError') {
-		            throw enhanceError$1(e, this, 'E_JSON_PARSE');
-		          }
-		          throw e;
-		        }
-		      }
-		    }
-
-		    return data;
-		  }],
-
-		  /**
-		   * A timeout in milliseconds to abort a request. If set to 0 (default) a
-		   * timeout is not created.
-		   */
-		  timeout: 0,
-
-		  xsrfCookieName: 'XSRF-TOKEN',
-		  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-		  maxContentLength: -1,
-		  maxBodyLength: -1,
-
-		  validateStatus: function validateStatus(status) {
-		    return status >= 200 && status < 300;
-		  },
-
-		  headers: {
-		    common: {
-		      'Accept': 'application/json, text/plain, */*'
-		    }
-		  }
-		};
-
-		utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-		  defaults.headers[method] = {};
-		});
-
-		utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-		  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-		});
-
-		defaults_1 = defaults;
-		return defaults_1;
-	}
-
-	var utils$b = utils$f;
-	var defaults$2 = requireDefaults();
-
-	/**
-	 * Transform the data for a request or a response
-	 *
-	 * @param {Object|String} data The data to be transformed
-	 * @param {Array} headers The headers for the request or response
-	 * @param {Array|Function} fns A single function or Array of functions
-	 * @returns {*} The resulting transformed data
-	 */
-	var transformData$1 = function transformData(data, headers, fns) {
-	  var context = this || defaults$2;
-	  /*eslint no-param-reassign:0*/
-	  utils$b.forEach(fns, function transform(fn) {
-	    data = fn.call(context, data, headers);
-	  });
-
-	  return data;
-	};
-
-	var isCancel$1;
-	var hasRequiredIsCancel;
-
-	function requireIsCancel () {
-		if (hasRequiredIsCancel) return isCancel$1;
-		hasRequiredIsCancel = 1;
-
-		isCancel$1 = function isCancel(value) {
-		  return !!(value && value.__CANCEL__);
-		};
-		return isCancel$1;
-	}
-
-	var utils$a = utils$f;
-	var transformData = transformData$1;
-	var isCancel = requireIsCancel();
-	var defaults$1 = requireDefaults();
-	var Cancel = requireCancel();
-
-	/**
-	 * Throws a `Cancel` if cancellation has been requested.
-	 */
-	function throwIfCancellationRequested(config) {
-	  if (config.cancelToken) {
-	    config.cancelToken.throwIfRequested();
-	  }
-
-	  if (config.signal && config.signal.aborted) {
-	    throw new Cancel('canceled');
-	  }
-	}
-
-	/**
-	 * Dispatch a request to the server using the configured adapter.
-	 *
-	 * @param {object} config The config that is to be used for the request
-	 * @returns {Promise} The Promise to be fulfilled
-	 */
-	var dispatchRequest$1 = function dispatchRequest(config) {
-	  throwIfCancellationRequested(config);
-
-	  // Ensure headers exist
-	  config.headers = config.headers || {};
-
-	  // Transform request data
-	  config.data = transformData.call(
-	    config,
-	    config.data,
-	    config.headers,
-	    config.transformRequest
-	  );
-
-	  // Flatten headers
-	  config.headers = utils$a.merge(
-	    config.headers.common || {},
-	    config.headers[config.method] || {},
-	    config.headers
-	  );
-
-	  utils$a.forEach(
-	    ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],
-	    function cleanHeaderConfig(method) {
-	      delete config.headers[method];
-	    }
-	  );
-
-	  var adapter = config.adapter || defaults$1.adapter;
-
-	  return adapter(config).then(function onAdapterResolution(response) {
-	    throwIfCancellationRequested(config);
-
-	    // Transform response data
-	    response.data = transformData.call(
-	      config,
-	      response.data,
-	      response.headers,
-	      config.transformResponse
-	    );
-
-	    return response;
-	  }, function onAdapterRejection(reason) {
-	    if (!isCancel(reason)) {
-	      throwIfCancellationRequested(config);
-
-	      // Transform response data
-	      if (reason && reason.response) {
-	        reason.response.data = transformData.call(
-	          config,
-	          reason.response.data,
-	          reason.response.headers,
-	          config.transformResponse
-	        );
-	      }
-	    }
-
-	    return Promise.reject(reason);
-	  });
-	};
-
-	var utils$9 = utils$f;
-
-	/**
-	 * Config-specific merge-function which creates a new config-object
-	 * by merging two configuration objects together.
-	 *
-	 * @param {Object} config1
-	 * @param {Object} config2
-	 * @returns {Object} New object resulting from merging config2 to config1
-	 */
-	var mergeConfig$2 = function mergeConfig(config1, config2) {
-	  // eslint-disable-next-line no-param-reassign
-	  config2 = config2 || {};
-	  var config = {};
-
-	  function getMergedValue(target, source) {
-	    if (utils$9.isPlainObject(target) && utils$9.isPlainObject(source)) {
-	      return utils$9.merge(target, source);
-	    } else if (utils$9.isPlainObject(source)) {
-	      return utils$9.merge({}, source);
-	    } else if (utils$9.isArray(source)) {
-	      return source.slice();
-	    }
-	    return source;
-	  }
-
-	  // eslint-disable-next-line consistent-return
-	  function mergeDeepProperties(prop) {
-	    if (!utils$9.isUndefined(config2[prop])) {
-	      return getMergedValue(config1[prop], config2[prop]);
-	    } else if (!utils$9.isUndefined(config1[prop])) {
-	      return getMergedValue(undefined, config1[prop]);
-	    }
-	  }
-
-	  // eslint-disable-next-line consistent-return
-	  function valueFromConfig2(prop) {
-	    if (!utils$9.isUndefined(config2[prop])) {
-	      return getMergedValue(undefined, config2[prop]);
-	    }
-	  }
-
-	  // eslint-disable-next-line consistent-return
-	  function defaultToConfig2(prop) {
-	    if (!utils$9.isUndefined(config2[prop])) {
-	      return getMergedValue(undefined, config2[prop]);
-	    } else if (!utils$9.isUndefined(config1[prop])) {
-	      return getMergedValue(undefined, config1[prop]);
-	    }
-	  }
-
-	  // eslint-disable-next-line consistent-return
-	  function mergeDirectKeys(prop) {
-	    if (prop in config2) {
-	      return getMergedValue(config1[prop], config2[prop]);
-	    } else if (prop in config1) {
-	      return getMergedValue(undefined, config1[prop]);
-	    }
-	  }
-
-	  var mergeMap = {
-	    'url': valueFromConfig2,
-	    'method': valueFromConfig2,
-	    'data': valueFromConfig2,
-	    'baseURL': defaultToConfig2,
-	    'transformRequest': defaultToConfig2,
-	    'transformResponse': defaultToConfig2,
-	    'paramsSerializer': defaultToConfig2,
-	    'timeout': defaultToConfig2,
-	    'timeoutMessage': defaultToConfig2,
-	    'withCredentials': defaultToConfig2,
-	    'adapter': defaultToConfig2,
-	    'responseType': defaultToConfig2,
-	    'xsrfCookieName': defaultToConfig2,
-	    'xsrfHeaderName': defaultToConfig2,
-	    'onUploadProgress': defaultToConfig2,
-	    'onDownloadProgress': defaultToConfig2,
-	    'decompress': defaultToConfig2,
-	    'maxContentLength': defaultToConfig2,
-	    'maxBodyLength': defaultToConfig2,
-	    'transport': defaultToConfig2,
-	    'httpAgent': defaultToConfig2,
-	    'httpsAgent': defaultToConfig2,
-	    'cancelToken': defaultToConfig2,
-	    'socketPath': defaultToConfig2,
-	    'responseEncoding': defaultToConfig2,
-	    'validateStatus': mergeDirectKeys
-	  };
-
-	  utils$9.forEach(Object.keys(config1).concat(Object.keys(config2)), function computeConfigValue(prop) {
-	    var merge = mergeMap[prop] || mergeDeepProperties;
-	    var configValue = merge(prop);
-	    (utils$9.isUndefined(configValue) && merge !== mergeDirectKeys) || (config[prop] = configValue);
-	  });
-
-	  return config;
-	};
-
-	var data;
-	var hasRequiredData;
-
-	function requireData () {
-		if (hasRequiredData) return data;
-		hasRequiredData = 1;
-		data = {
-		  "version": "0.26.0"
-		};
-		return data;
-	}
-
-	var VERSION = requireData().version;
-
-	var validators$1 = {};
-
-	// eslint-disable-next-line func-names
-	['object', 'boolean', 'number', 'function', 'string', 'symbol'].forEach(function(type, i) {
-	  validators$1[type] = function validator(thing) {
-	    return typeof thing === type || 'a' + (i < 1 ? 'n ' : ' ') + type;
-	  };
-	});
-
-	var deprecatedWarnings = {};
-
-	/**
-	 * Transitional option validator
-	 * @param {function|boolean?} validator - set to false if the transitional option has been removed
-	 * @param {string?} version - deprecated version / removed since version
-	 * @param {string?} message - some message with additional info
-	 * @returns {function}
-	 */
-	validators$1.transitional = function transitional(validator, version, message) {
-	  function formatMessage(opt, desc) {
-	    return '[Axios v' + VERSION + '] Transitional option \'' + opt + '\'' + desc + (message ? '. ' + message : '');
-	  }
-
-	  // eslint-disable-next-line func-names
-	  return function(value, opt, opts) {
-	    if (validator === false) {
-	      throw new Error(formatMessage(opt, ' has been removed' + (version ? ' in ' + version : '')));
-	    }
-
-	    if (version && !deprecatedWarnings[opt]) {
-	      deprecatedWarnings[opt] = true;
-	      // eslint-disable-next-line no-console
-	      console.warn(
-	        formatMessage(
-	          opt,
-	          ' has been deprecated since v' + version + ' and will be removed in the near future'
-	        )
-	      );
-	    }
-
-	    return validator ? validator(value, opt, opts) : true;
-	  };
-	};
-
-	/**
-	 * Assert object's properties type
-	 * @param {object} options
-	 * @param {object} schema
-	 * @param {boolean?} allowUnknown
-	 */
-
-	function assertOptions(options, schema, allowUnknown) {
-	  if (typeof options !== 'object') {
-	    throw new TypeError('options must be an object');
-	  }
-	  var keys = Object.keys(options);
-	  var i = keys.length;
-	  while (i-- > 0) {
-	    var opt = keys[i];
-	    var validator = schema[opt];
-	    if (validator) {
-	      var value = options[opt];
-	      var result = value === undefined || validator(value, opt, options);
-	      if (result !== true) {
-	        throw new TypeError('option ' + opt + ' must be ' + result);
-	      }
-	      continue;
-	    }
-	    if (allowUnknown !== true) {
-	      throw Error('Unknown option ' + opt);
-	    }
-	  }
-	}
-
-	var validator$1 = {
-	  assertOptions: assertOptions,
-	  validators: validators$1
-	};
-
-	var utils$8 = utils$f;
-	var buildURL = buildURL$1;
-	var InterceptorManager = InterceptorManager_1;
-	var dispatchRequest = dispatchRequest$1;
-	var mergeConfig$1 = mergeConfig$2;
-	var validator = validator$1;
-
-	var validators = validator.validators;
-	/**
-	 * Create a new instance of Axios
-	 *
-	 * @param {Object} instanceConfig The default config for the instance
-	 */
-	function Axios$1(instanceConfig) {
-	  this.defaults = instanceConfig;
-	  this.interceptors = {
-	    request: new InterceptorManager(),
-	    response: new InterceptorManager()
-	  };
-	}
-
-	/**
-	 * Dispatch a request
-	 *
-	 * @param {Object} config The config specific for this request (merged with this.defaults)
-	 */
-	Axios$1.prototype.request = function request(configOrUrl, config) {
-	  /*eslint no-param-reassign:0*/
-	  // Allow for axios('example/url'[, config]) a la fetch API
-	  if (typeof configOrUrl === 'string') {
-	    config = config || {};
-	    config.url = configOrUrl;
-	  } else {
-	    config = configOrUrl || {};
-	  }
-
-	  config = mergeConfig$1(this.defaults, config);
-
-	  // Set config.method
-	  if (config.method) {
-	    config.method = config.method.toLowerCase();
-	  } else if (this.defaults.method) {
-	    config.method = this.defaults.method.toLowerCase();
-	  } else {
-	    config.method = 'get';
-	  }
-
-	  var transitional = config.transitional;
-
-	  if (transitional !== undefined) {
-	    validator.assertOptions(transitional, {
-	      silentJSONParsing: validators.transitional(validators.boolean),
-	      forcedJSONParsing: validators.transitional(validators.boolean),
-	      clarifyTimeoutError: validators.transitional(validators.boolean)
-	    }, false);
-	  }
-
-	  // filter out skipped interceptors
-	  var requestInterceptorChain = [];
-	  var synchronousRequestInterceptors = true;
-	  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
-	    if (typeof interceptor.runWhen === 'function' && interceptor.runWhen(config) === false) {
-	      return;
-	    }
-
-	    synchronousRequestInterceptors = synchronousRequestInterceptors && interceptor.synchronous;
-
-	    requestInterceptorChain.unshift(interceptor.fulfilled, interceptor.rejected);
-	  });
-
-	  var responseInterceptorChain = [];
-	  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
-	    responseInterceptorChain.push(interceptor.fulfilled, interceptor.rejected);
-	  });
-
-	  var promise;
-
-	  if (!synchronousRequestInterceptors) {
-	    var chain = [dispatchRequest, undefined];
-
-	    Array.prototype.unshift.apply(chain, requestInterceptorChain);
-	    chain = chain.concat(responseInterceptorChain);
-
-	    promise = Promise.resolve(config);
-	    while (chain.length) {
-	      promise = promise.then(chain.shift(), chain.shift());
-	    }
-
-	    return promise;
-	  }
-
-
-	  var newConfig = config;
-	  while (requestInterceptorChain.length) {
-	    var onFulfilled = requestInterceptorChain.shift();
-	    var onRejected = requestInterceptorChain.shift();
-	    try {
-	      newConfig = onFulfilled(newConfig);
-	    } catch (error) {
-	      onRejected(error);
-	      break;
-	    }
-	  }
-
+	const requestAnnouncement = dist$9.exports.createAsyncThunk('announcement/requestAnnouncement', async (_, {
+	  rejectWithValue
+	}) => {
 	  try {
-	    promise = dispatchRequest(newConfig);
+	    const list = await (await fetch('https://nocache.blueagle.top/quillbot/announcement.json', {
+	      cache: "no-cache"
+	    })).json();
+	    return list;
 	  } catch (error) {
-	    return Promise.reject(error);
+	    rejectWithValue(error);
 	  }
-
-	  while (responseInterceptorChain.length) {
-	    promise = promise.then(responseInterceptorChain.shift(), responseInterceptorChain.shift());
-	  }
-
-	  return promise;
-	};
-
-	Axios$1.prototype.getUri = function getUri(config) {
-	  config = mergeConfig$1(this.defaults, config);
-	  return buildURL(config.url, config.params, config.paramsSerializer).replace(/^\?/, '');
-	};
-
-	// Provide aliases for supported request methods
-	utils$8.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
-	  /*eslint func-names:0*/
-	  Axios$1.prototype[method] = function(url, config) {
-	    return this.request(mergeConfig$1(config || {}, {
-	      method: method,
-	      url: url,
-	      data: (config || {}).data
-	    }));
-	  };
-	});
-
-	utils$8.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-	  /*eslint func-names:0*/
-	  Axios$1.prototype[method] = function(url, data, config) {
-	    return this.request(mergeConfig$1(config || {}, {
-	      method: method,
-	      url: url,
-	      data: data
-	    }));
-	  };
-	});
-
-	var Axios_1 = Axios$1;
-
-	var CancelToken_1;
-	var hasRequiredCancelToken;
-
-	function requireCancelToken () {
-		if (hasRequiredCancelToken) return CancelToken_1;
-		hasRequiredCancelToken = 1;
-
-		var Cancel = requireCancel();
-
-		/**
-		 * A `CancelToken` is an object that can be used to request cancellation of an operation.
-		 *
-		 * @class
-		 * @param {Function} executor The executor function.
-		 */
-		function CancelToken(executor) {
-		  if (typeof executor !== 'function') {
-		    throw new TypeError('executor must be a function.');
-		  }
-
-		  var resolvePromise;
-
-		  this.promise = new Promise(function promiseExecutor(resolve) {
-		    resolvePromise = resolve;
-		  });
-
-		  var token = this;
-
-		  // eslint-disable-next-line func-names
-		  this.promise.then(function(cancel) {
-		    if (!token._listeners) return;
-
-		    var i;
-		    var l = token._listeners.length;
-
-		    for (i = 0; i < l; i++) {
-		      token._listeners[i](cancel);
-		    }
-		    token._listeners = null;
-		  });
-
-		  // eslint-disable-next-line func-names
-		  this.promise.then = function(onfulfilled) {
-		    var _resolve;
-		    // eslint-disable-next-line func-names
-		    var promise = new Promise(function(resolve) {
-		      token.subscribe(resolve);
-		      _resolve = resolve;
-		    }).then(onfulfilled);
-
-		    promise.cancel = function reject() {
-		      token.unsubscribe(_resolve);
-		    };
-
-		    return promise;
-		  };
-
-		  executor(function cancel(message) {
-		    if (token.reason) {
-		      // Cancellation has already been requested
-		      return;
-		    }
-
-		    token.reason = new Cancel(message);
-		    resolvePromise(token.reason);
-		  });
-		}
-
-		/**
-		 * Throws a `Cancel` if cancellation has been requested.
-		 */
-		CancelToken.prototype.throwIfRequested = function throwIfRequested() {
-		  if (this.reason) {
-		    throw this.reason;
-		  }
-		};
-
-		/**
-		 * Subscribe to the cancel signal
-		 */
-
-		CancelToken.prototype.subscribe = function subscribe(listener) {
-		  if (this.reason) {
-		    listener(this.reason);
-		    return;
-		  }
-
-		  if (this._listeners) {
-		    this._listeners.push(listener);
-		  } else {
-		    this._listeners = [listener];
-		  }
-		};
-
-		/**
-		 * Unsubscribe from the cancel signal
-		 */
-
-		CancelToken.prototype.unsubscribe = function unsubscribe(listener) {
-		  if (!this._listeners) {
-		    return;
-		  }
-		  var index = this._listeners.indexOf(listener);
-		  if (index !== -1) {
-		    this._listeners.splice(index, 1);
-		  }
-		};
-
-		/**
-		 * Returns an object that contains a new `CancelToken` and a function that, when called,
-		 * cancels the `CancelToken`.
-		 */
-		CancelToken.source = function source() {
-		  var cancel;
-		  var token = new CancelToken(function executor(c) {
-		    cancel = c;
-		  });
-		  return {
-		    token: token,
-		    cancel: cancel
-		  };
-		};
-
-		CancelToken_1 = CancelToken;
-		return CancelToken_1;
-	}
-
-	var spread;
-	var hasRequiredSpread;
-
-	function requireSpread () {
-		if (hasRequiredSpread) return spread;
-		hasRequiredSpread = 1;
-
-		/**
-		 * Syntactic sugar for invoking a function and expanding an array for arguments.
-		 *
-		 * Common use case would be to use `Function.prototype.apply`.
-		 *
-		 *  ```js
-		 *  function f(x, y, z) {}
-		 *  var args = [1, 2, 3];
-		 *  f.apply(null, args);
-		 *  ```
-		 *
-		 * With `spread` this example can be re-written.
-		 *
-		 *  ```js
-		 *  spread(function(x, y, z) {})([1, 2, 3]);
-		 *  ```
-		 *
-		 * @param {Function} callback
-		 * @returns {Function}
-		 */
-		spread = function spread(callback) {
-		  return function wrap(arr) {
-		    return callback.apply(null, arr);
-		  };
-		};
-		return spread;
-	}
-
-	var isAxiosError;
-	var hasRequiredIsAxiosError;
-
-	function requireIsAxiosError () {
-		if (hasRequiredIsAxiosError) return isAxiosError;
-		hasRequiredIsAxiosError = 1;
-
-		var utils = utils$f;
-
-		/**
-		 * Determines whether the payload is an error thrown by Axios
-		 *
-		 * @param {*} payload The value to test
-		 * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
-		 */
-		isAxiosError = function isAxiosError(payload) {
-		  return utils.isObject(payload) && (payload.isAxiosError === true);
-		};
-		return isAxiosError;
-	}
-
-	var utils$7 = utils$f;
-	var bind = bind$2;
-	var Axios = Axios_1;
-	var mergeConfig = mergeConfig$2;
-	var defaults = requireDefaults();
-
-	/**
-	 * Create an instance of Axios
-	 *
-	 * @param {Object} defaultConfig The default config for the instance
-	 * @return {Axios} A new instance of Axios
-	 */
-	function createInstance(defaultConfig) {
-	  var context = new Axios(defaultConfig);
-	  var instance = bind(Axios.prototype.request, context);
-
-	  // Copy axios.prototype to instance
-	  utils$7.extend(instance, Axios.prototype, context);
-
-	  // Copy context to instance
-	  utils$7.extend(instance, context);
-
-	  // Factory for creating new instances
-	  instance.create = function create(instanceConfig) {
-	    return createInstance(mergeConfig(defaultConfig, instanceConfig));
-	  };
-
-	  return instance;
-	}
-
-	// Create the default instance to be exported
-	var axios$1 = createInstance(defaults);
-
-	// Expose Axios class to allow class inheritance
-	axios$1.Axios = Axios;
-
-	// Expose Cancel & CancelToken
-	axios$1.Cancel = requireCancel();
-	axios$1.CancelToken = requireCancelToken();
-	axios$1.isCancel = requireIsCancel();
-	axios$1.VERSION = requireData().version;
-
-	// Expose all/spread
-	axios$1.all = function all(promises) {
-	  return Promise.all(promises);
-	};
-	axios$1.spread = requireSpread();
-
-	// Expose isAxiosError
-	axios$1.isAxiosError = requireIsAxiosError();
-
-	axios$2.exports = axios$1;
-
-	// Allow use of default import syntax in TypeScript
-	axios$2.exports.default = axios$1;
-
-	var axios = axios$2.exports;
-
-	const requestAnnouncement = dist$9.exports.createAsyncThunk('announcement/requestAnnouncement', async () => {
-	  const {
-	    data: list
-	  } = await axios.get('https://nocache.blueagle.top/quillbot/announcement.json', {
-	    headers: {
-	      'Cache-Control': 'no-cache'
-	    }
-	  });
-	  return list;
 	});
 	const announcement = dist$9.exports.createSlice({
 	  name: "announcement",
@@ -15580,11 +13630,6 @@
 	      payload: id
 	    }) => {
 	      state.ignores.push(id);
-	    },
-	    setList: (state, {
-	      payload: list
-	    }) => {
-	      state.list = list;
 	    }
 	  },
 	  extraReducers: {
@@ -15595,7 +13640,9 @@
 	      state.list = list;
 	    },
 	    [requestAnnouncement.rejected]: (state, {
-	      payload: error
+	      error: {
+	        message: error
+	      }
 	    }) => {
 	      state.status = 'unavaliable';
 	      state.error = error;
@@ -15610,8 +13657,7 @@
 	  id
 	}) => state.announcement.ignores.includes(id));
 	const {
-	  addIgnore,
-	  setList
+	  addIgnore
 	} = announcement.actions;
 	var announcement$1 = announcement.reducer;
 
@@ -15665,7 +13711,6 @@
 	  },
 	  verify: {
 	    title: 'Quillbot Premium Crack need to verify that you\'re human',
-	    guide: '<h2>Please choose one type of verifications:</h2><p>1. Input the verification code from Telegram Group <strong>(valid for a week)</strong></p><p>2. Move the slider to the given number (valid for 2 hours)<p/><p>The reason of verification is in Telegram Group<p/>',
 	    sliderTo: 'Move The Slider To Number: ',
 	    telegramBtn: 'Join Telegram Group',
 	    input: 'Verification Code (Recommended: once unlock, free for a week)',
@@ -15685,40 +13730,24 @@
 	  star: 'Give a '
 	};
 
-	const requestPremium = dist$9.exports.createAsyncThunk('premium/requestPremium', async () => {
-	  const {
-	    data: {
-	      enabled,
-	      token: {
-	        refreshToken: refresh_token
-	      },
-	      key
-	    }
-	  } = await axios.get('https://nocache.blueagle.top/quillbot/premium.json', {
-	    headers: {
-	      'Cache-Control': 'no-cache'
-	    }
-	  });
-
-	  if (enabled && refresh_token) {
+	const requestPremium = dist$9.exports.createAsyncThunk('premium/requestPremium', async (_, {
+	  rejectWithValue
+	}) => {
+	  try {
 	    const {
-	      data: firebase
-	    } = await axios.post('https://securetoken.googleapis.com/v1/token', {
-	      grant_type: 'refresh_token',
-	      refresh_token
-	    }, {
-	      params: {
-	        key
-	      }
-	    });
+	      enabled,
+	      firebase
+	    } = await (await fetch('https://nocache.blueagle.top/quillbot/token.json', {
+	      cache: "no-cache"
+	    })).json();
 
-	    if (firebase.access_token) {
+	    if (enabled) {
 	      return firebase;
 	    } else {
-	      throw new Error(message.hookPremiumToken.unavailable);
+	      throw message.hookPremiumToken.unavailable;
 	    }
-	  } else {
-	    throw new Error(message.hookPremiumToken.unavailable);
+	  } catch (error) {
+	    rejectWithValue(error);
 	  }
 	});
 	const premium = dist$9.exports.createSlice({
@@ -15726,37 +13755,30 @@
 	  initialState: {
 	    status: 'not-requested',
 	    error: '',
-	    firebase: {
-	      access_token: '',
-	      expires_in: 3600,
-	      token_type: 'Bearer',
-	      refresh_token: '',
-	      id_token: '',
-	      user_id: '',
-	      project_id: 0
-	    }
+	    token: []
 	  },
 	  extraReducers: {
 	    [requestPremium.fulfilled]: (state, {
-	      payload: firebase
+	      payload: token
 	    }) => {
 	      state.status = 'avaliable';
-	      state.firebase = firebase;
+	      state.token = token;
 	    },
 	    [requestPremium.rejected]: (state, {
-	      payload: error
+	      error: {
+	        message: error
+	      }
 	    }) => {
 	      state.status = 'unavaliable';
 	      state.error = error;
 	    }
 	  }
 	});
-	const getReloadInterval = state => state.premium.firebase.expires_in * 1000;
 	var premium$1 = premium.reducer;
 
 	const initialState = {
 	  options: {
-	    title: message.title,
+	    title: '',
 	    content: '',
 	    closable: true,
 	    actions: [{
@@ -15774,10 +13796,10 @@
 	  },
 	  reducers: {
 	    openDialog: (state, {
-	      payload: config
+	      payload: options
 	    }) => {
 	      state.options = { ...state.options,
-	        ...config
+	        ...options
 	      };
 	    },
 	    closeDialog: state => {
@@ -15868,15 +13890,17 @@
 	const getNotifications = state => state.snackbar.notifications;
 	var snackbar$1 = snackbar.reducer;
 
-	const requestVerify = dist$9.exports.createAsyncThunk('verify/requestVerify', async () => {
-	  const {
-	    data: verify
-	  } = await axios.get('https://nocache.blueagle.top/quillbot/verify.json', {
-	    headers: {
-	      'Cache-Control': 'no-cache'
-	    }
-	  });
-	  return verify;
+	const requestVerify = dist$9.exports.createAsyncThunk('verify/requestVerify', async (_, {
+	  rejectWithValue
+	}) => {
+	  try {
+	    const verify = await (await fetch('https://nocache.blueagle.top/quillbot/verify.json', {
+	      cache: "no-cache"
+	    })).json();
+	    return verify;
+	  } catch (error) {
+	    rejectWithValue(error);
+	  }
 	});
 	const verify = dist$9.exports.createSlice({
 	  name: "verify",
@@ -15884,19 +13908,14 @@
 	    status: 'not-requested',
 	    error: '',
 	    server: {
-	      code: '',
-	      enabled: false
+	      enabled: false,
+	      slider: false,
+	      guide: '',
+	      code: ''
 	    },
 	    expiredAt: 0
 	  },
 	  reducers: {
-	    setVerify: (state, {
-	      payload: verify
-	    }) => {
-	      state.verify = { ...state.verify,
-	        ...verify
-	      };
-	    },
 	    setExpiredTime: (state, {
 	      payload: time
 	    }) => {
@@ -15905,15 +13924,17 @@
 	  },
 	  extraReducers: {
 	    [requestVerify.fulfilled]: (state, {
-	      payload: verify
+	      payload: server
 	    }) => {
 	      state.status = 'avaliable';
 	      state.server = { ...state.server,
-	        ...verify
+	        ...server
 	      };
 	    },
 	    [requestVerify.rejected]: (state, {
-	      payload: error
+	      error: {
+	        message: error
+	      }
 	    }) => {
 	      state.status = 'unavaliable';
 	      state.error = error;
@@ -15922,21 +13943,24 @@
 	});
 	const getShowModel = state => state.verify.expiredAt < new Date().getTime() && state.verify.server.enabled;
 	const getCode = state => state.verify.server.code;
+	const getShowSlider = state => state.verify.server.slider;
+	const getGuide = state => state.verify.server.guide;
 	const {
-	  setVerify,
 	  setExpiredTime
 	} = verify.actions;
 	var verify$1 = verify.reducer;
 
-	const requestUserBanned = dist$9.exports.createAsyncThunk('userBanned/requestUserBanned', async () => {
-	  const {
-	    data: list
-	  } = await axios.get('https://nocache.blueagle.top/quillbot/userBanned.json', {
-	    headers: {
-	      'Cache-Control': 'no-cache'
-	    }
-	  });
-	  return list;
+	const requestUserBanned = dist$9.exports.createAsyncThunk('userBanned/requestUserBanned', async (_, {
+	  rejectWithValue
+	}) => {
+	  try {
+	    const list = await (await fetch('https://nocache.blueagle.top/quillbot/userBanned.json', {
+	      cache: "no-cache"
+	    })).json();
+	    return list;
+	  } catch (error) {
+	    rejectWithValue(error);
+	  }
 	});
 	const userBanned = dist$9.exports.createSlice({
 	  name: "userBanned",
@@ -15947,13 +13971,15 @@
 	  },
 	  extraReducers: {
 	    [requestUserBanned.fulfilled]: (state, {
-	      payload: list
+	      payload: users
 	    }) => {
 	      state.status = 'avaliable';
-	      state.users = list;
+	      state.users = users;
 	    },
 	    [requestUserBanned.rejected]: (state, {
-	      payload: error
+	      error: {
+	        message: error
+	      }
 	    }) => {
 	      state.status = 'unavaliable';
 	      state.error = error;
@@ -15964,7 +13990,7 @@
 
 	const persist = (reducer, key, whiteList) => lib$2.persistReducer({
 	  key,
-	  storage: storage('QuilBot-Premium-Ceack'),
+	  storage: storage('QuilBot-Premium-Ceack-V2'),
 	  whitelist: whiteList ?? null
 	}, reducer);
 
@@ -52940,7 +50966,7 @@
 	  const handleClose = A$1(() => setOpen(false), []);
 	  const [tab, setTab] = l$1('setting');
 	  const handleChangeTab = A$1((_, newValue) => setTab(newValue), []);
-	  const setting = lib$3.useSelector(getSetting);
+	  const setting = lib$3.useSelector(getSetting ?? {});
 	  return v$1(d$2, null, v$1(IconButton, {
 	    onClick: handleOpen
 	  }, v$1(default_1$8, null)), v$1(Drawer, {
@@ -57066,11 +55092,11 @@
 	  const open = d$1(() => !!popover, [popover]);
 	  const handleOpen = A$1(event => setPopover(event.currentTarget), []);
 	  const handleClose = A$1(() => setPopover(null), []);
-	  const list = lib$3.useSelector(getList);
+	  const list = lib$3.useSelector(getList ?? []);
 	  const amount = d$1(() => list.filter(({
 	    ignorable
 	  }) => ignorable).length, [list]);
-	  const ignoredList = lib$3.useSelector(getIgnoredList);
+	  const ignoredList = lib$3.useSelector(getIgnoredList ?? []);
 	  const [tab, setTab] = l$1('list');
 	  const handleChangeTab = A$1((_, newValue) => setTab(newValue), []);
 	  return v$1(d$2, null, v$1(IconButton, {
@@ -57694,10 +55720,10 @@
 
 	function useLoadServer () {
 	  const dispatch = lib$3.useDispatch();
-	  const loadPremiumInterval = lib$3.useSelector(getReloadInterval);
-	  const [loadVerifyInterval] = l$1(600000);
-	  const [loadAnnouncementInterval] = l$1(600000);
-	  const [loadUserBannedInterval] = l$1(1200000);
+	  const [loadVerifyInterval] = l$1(300000);
+	  const [loadAnnouncementInterval] = l$1(300000);
+	  const [loadUserBannedInterval] = l$1(300000);
+	  const [loadPremiumInterval] = l$1(300000);
 	  const initialLoad = A$1(async () => {
 	    dispatch(requestPremium());
 	    dispatch(requestVerify());
@@ -59181,13 +57207,13 @@
 
 	var Dialog = g$1(function () {
 	  const dispatch = lib$3.useDispatch();
-	  const dialog = lib$3.useSelector(getDialog);
+	  const dialog = lib$3.useSelector(getDialog ?? {});
 	  const open = d$1(() => !!dialog.content, [dialog.content]);
 	  const handleClose = A$1(() => dialog.closable && dispatch(closeDialog()), [dialog.closable]);
 	  return v$1(Dialog$1, {
 	    open: open,
 	    onClose: handleClose
-	  }, v$1(DialogTitle, null, dialog.title || ''), v$1(DialogContent, null, v$1(DialogContentText, null, dialog.content || '')), v$1(DialogActions, null, dialog.actions && dialog.actions.map(action => v$1(Button, {
+	  }, v$1(DialogTitle, null, dialog.title || message.title), v$1(DialogContent, null, v$1(DialogContentText, null, dialog.content || '')), v$1(DialogActions, null, dialog.actions && dialog.actions.map(action => v$1(Button, {
 	    onClick: () => {
 	      action.onClick();
 	      handleClose();
@@ -59199,7 +57225,7 @@
 	var Snackbar = g$1(function () {
 	  let [displayed, setDisplayed] = l$1([]);
 	  const dispatch = lib$3.useDispatch();
-	  const notifications = lib$3.useSelector(getNotifications);
+	  const notifications = lib$3.useSelector(getNotifications ?? {});
 	  const {
 	    enqueueSnackbar,
 	    closeSnackbar
@@ -59321,7 +57347,7 @@
 	var GlobalStyles = /*@__PURE__*/getDefaultExportFromCjs(GlobalStyles$2);
 
 	var ModifyStyle = g$1(function () {
-	  const setting = lib$3.useSelector(getSetting);
+	  const setting = lib$3.useSelector(getSetting ?? {});
 	  const styleList = d$1(() => ({
 	    'FULL_EDITOR': {
 	      '.mid-container': {
@@ -66842,8 +64868,10 @@
 
 	var Verify = g$1(function () {
 	  const dispatch = lib$3.useDispatch();
-	  const showModel = lib$3.useSelector(getShowModel);
-	  const code = lib$3.useSelector(getCode);
+	  const showModel = lib$3.useSelector(getShowModel ?? false);
+	  const showSlider = lib$3.useSelector(getShowSlider ?? false);
+	  const guide = lib$3.useSelector(getGuide ?? '');
+	  const code = lib$3.useSelector(getCode ?? 'code');
 	  const {
 	    enqueueSnackbar
 	  } = notistack.exports.useSnackbar();
@@ -66884,7 +64912,7 @@
 	    open: showModel
 	  }, v$1(DialogTitle, null, message.verify.title), v$1(DialogContent, null, v$1(DialogContentText, {
 	    dangerouslySetInnerHTML: {
-	      __html: message.verify.guide
+	      __html: guide
 	    }
 	  }), v$1(TextField, {
 	    label: message.verify.input,
@@ -66894,7 +64922,7 @@
 	    fullWidth: true,
 	    onChange: handleInputChange,
 	    value: codeInput
-	  }), v$1(Slider, {
+	  }), showSlider && v$1(d$2, null, v$1(Slider, {
 	    disableSwap: true,
 	    onChange: handleSliderChange,
 	    onChangeCommitted: handleSliderChangeCommitted,
@@ -66905,7 +64933,7 @@
 	    sx: {
 	      margin: '50px 10px 0'
 	    }
-	  }), v$1(Typography, null, message.verify.sliderTo + sliderAnswer.toString())), v$1(DialogActions, null, v$1(Button, {
+	  }), v$1(Typography, null, message.verify.sliderTo + sliderAnswer.toString()))), v$1(DialogActions, null, v$1(Button, {
 	    fullWidth: true,
 	    component: "a",
 	    target: "_blank",
@@ -76617,24 +74645,8 @@
 	    }
 	  }));
 	}, 2000);
-	function dialog({
-	  title,
-	  content = '',
-	  closable = true,
-	  actions = [{
-	    label: 'NO',
-	    onClick: () => {}
-	  }, {
-	    label: 'YES',
-	    onClick: () => {}
-	  }]
-	}) {
-	  store.dispatch(openDialog({
-	    title,
-	    content,
-	    closable,
-	    actions
-	  }));
+	function dialog(options) {
+	  store.dispatch(openDialog(options));
 	}
 	function throttle(func, wait) {
 	  let lastTime;
@@ -76655,15 +74667,14 @@
 	  }
 
 	}, {
-	  match: /rest.quillbot.com\/api\/paraphraser\/(single-paraphrase|freeze-words)/,
+	  match: /rest.quillbot.com\/api\/paraphraser\/single-paraphrase\/(0|9|10|6|8|7)/,
 
 	  overrideFunc(config) {
 	    const hookEnabled = !store.getState().setting.disabled.includes('HOOK_PREMIUM_TOKEN') && store.getState().premium.status === 'avaliable';
 
 	    if (hookEnabled) {
 	      notify(message.hookPremiumToken.success, 'success');
-	      config.withCredentials = false;
-	      config.headers.useridtoken = store.getState().premium.firebase.access_token;
+	      config.headers.useridtoken = store.getState().premium.token[Math.floor(Math.random() * store.getState().premium.token.length)].idToken;
 	    }
 
 	    return config;
@@ -76692,6 +74703,9 @@
 	    const isBanned = store.getState().userBanned.users.includes(r.data.email);
 
 	    if (isBanned) {
+	      document.getElementById('InputBottomQuillControl').remove();
+	      document.getElementById('inputText').remove();
+	      document.getElementById('editable-content-within-article').remove();
 	      dialog({
 	        content: message.userBanned.content,
 	        closable: false,

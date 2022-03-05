@@ -13,30 +13,12 @@ export const notify = throttle((message = '', variant = 'info') => {
   );
 }, 2000);
 
-export function dialog({
-  title,
-  content = '',
-  closable = true,
-  actions = [
-    {
-      label: 'NO',
-      onClick: () => { }
-    },
-    {
-      label: 'YES',
-      onClick: () => { }
-    }
-  ]
-}) {
+export function dialog(options) {
   store.dispatch(
-    openDialog({
-      title,
-      content,
-      closable,
-      actions,
-    })
+    openDialog(options)
   );
 }
+
 export function throttle(func, wait) {
   let lastTime
   return function (...rest) {

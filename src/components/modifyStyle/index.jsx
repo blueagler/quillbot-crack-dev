@@ -7,7 +7,7 @@ import { getSetting } from 'store/setting';
 
 export default memo(function () {
 
-  const setting = useSelector(getSetting);
+  const setting = useSelector(getSetting ?? {});
 
   const styleList = useMemo(() => (
     {

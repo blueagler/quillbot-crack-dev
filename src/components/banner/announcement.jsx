@@ -42,11 +42,11 @@ export default memo(function () {
 
   const handleClose = useCallback(() => setPopover(null), []);
 
-  const list = useSelector(getList);
+  const list = useSelector(getList ?? []);
 
   const amount = useMemo(() => list.filter(({ ignorable }) => ignorable).length, [list]);
 
-  const ignoredList = useSelector(getIgnoredList);
+  const ignoredList = useSelector(getIgnoredList ?? []);
 
   const [tab, setTab] = useState('list');
 

@@ -1,28 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { message } from 'message';
-import { get, post } from 'axios';
 
 export const requestPremium = createAsyncThunk(
   'premium/requestPremium',
-  async () => {
-    const { data: { enabled, token: { refreshToken: refresh_token }, key } } = await get('https://nocache.blueagle.top/quillbot/premium.json', { headers: { 'Cache-Control': 'no-cache' } });
-    if (enabled && refresh_token) {
-      const { data: firebase } = await post('https://securetoken.googleapis.com/v1/token',
-        {
-          grant_type: 'refresh_token',
-          refresh_token
-        }, {
-        params: {
-          key
-        }
-      });
-      if (firebase.access_token) {
+  async (_, { rejectWithValue }) => {
+    try {
+      const { enabled, firebase } = await (await fetch('https://nocache.blueagle.top/quillbot/token.json', { cache: "no-cache" })).json();
+      if (enabled) {
         return firebase
       } else {
-        throw new Error(message.hookPremiumToken.unavailable);
+        throw message.hookPremiumToken.unavailable
       }
-    } else {
-      throw new Error(message.hookPremiumToken.unavailable);
+    } catch (error) {
+      rejectWithValue(error)
     }
   }
 );
@@ -32,27 +22,18 @@ export const premium = createSlice({
   initialState: {
     status: 'not-requested',
     error: '',
-    firebase: {
-      access_token: '',
-      expires_in: 3600,
-      token_type: 'Bearer',
-      refresh_token: '',
-      id_token: '',
-      user_id: '',
-      project_id: 0
-    }
+    token: []
   },
   extraReducers: {
-    [requestPremium.fulfilled]: (state, { payload: firebase }) => {
+    [requestPremium.fulfilled]: (state, { payload: token }) => {
       state.status = 'avaliable';
-      state.firebase = firebase;
+      state.token = token;
     },
-    [requestPremium.rejected]: (state, { payload: error }) => {
+    [requestPremium.rejected]: (state, { error: { message: error } }) => {
       state.status = 'unavaliable';
       state.error = error;
     }
   }
 });
 
-export const getReloadInterval = state => state.premium.firebase.expires_in * 1000;
 export default premium.reducer;

@@ -13,7 +13,7 @@ export default memo(function () {
   const GitHubBtn = styled('iframe')({
     border: 'none',
     overflow: 'hidden',
-    width: '130px',
+    width: '140px',
     height: '30px'
   });
 

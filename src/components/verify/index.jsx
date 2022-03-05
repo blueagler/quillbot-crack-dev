@@ -1,4 +1,4 @@
-import { memo } from 'preact/compat';
+import { memo, Fragment } from 'preact/compat';
 import { useCallback, useState, useEffect } from 'preact/hooks';
 import { useSnackbar } from 'notistack';
 import { message } from 'message';
@@ -13,13 +13,17 @@ import Slider from '@mui/material/Slider';
 import Typography from '@mui/material/Typography';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setExpiredTime, getCode, getShowModel } from 'store/verify';
+import { setExpiredTime, getCode, getShowModel, getShowSlider, getGuide } from 'store/verify';
 
 export default memo(function () {
 
   const dispatch = useDispatch();
-  const showModel = useSelector(getShowModel);
-  const code = useSelector(getCode);
+
+  const showModel = useSelector(getShowModel ?? false);
+  const showSlider = useSelector(getShowSlider ?? false);
+  const guide = useSelector(getGuide ?? '');
+
+  const code = useSelector(getCode ?? 'code');
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -68,21 +72,26 @@ export default memo(function () {
         {message.verify.title}
       </DialogTitle>
       <DialogContent>
-        <DialogContentText dangerouslySetInnerHTML={{ __html: message.verify.guide }} />
+        <DialogContentText dangerouslySetInnerHTML={{ __html: guide }} />
         <TextField label={message.verify.input} variant="outlined" color="success" size="large" fullWidth onChange={handleInputChange} value={codeInput} />
-        <Slider
-          disableSwap
-          onChange={handleSliderChange}
-          onChangeCommitted={handleSliderChangeCommitted}
-          value={sliderInput}
-          min={0}
-          max={100}
-          valueLabelDisplay="on"
-          sx={{
-            margin: '50px 10px 0'
-          }}
-        />
-        <Typography>{message.verify.sliderTo + sliderAnswer.toString()}</Typography>
+        {
+          showSlider &&
+          <Fragment>
+            <Slider
+              disableSwap
+              onChange={handleSliderChange}
+              onChangeCommitted={handleSliderChangeCommitted}
+              value={sliderInput}
+              min={0}
+              max={100}
+              valueLabelDisplay="on"
+              sx={{
+                margin: '50px 10px 0'
+              }}
+            />
+            <Typography>{message.verify.sliderTo + sliderAnswer.toString()}</Typography>
+          </Fragment>
+        }
 
       </DialogContent>
       <DialogActions>
