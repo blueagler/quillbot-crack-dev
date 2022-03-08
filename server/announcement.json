@@ -12,9 +12,9 @@
     ]
   },
   {
-    "id": "FIX_2022_3",
-    "title": "Error Fixed!",
-    "content": "In 2022 2-3, the extension shuted down for a while. But now it's back! Thanks for your patience.",
+    "id": "PREMIUM_TOKEN_UNAVALIABLE_Q",
+    "title": "If Premium Token is unavailable, what should you do?",
+    "content": "<p>1. You can reportb this issue on the telegram group</p><p>2. You can still use Standard Mode with unlimited words limit and Max Synonyms</p>",
     "ignorable": true,
     "links": []
   }

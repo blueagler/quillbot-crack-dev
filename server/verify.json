@@ -1,6 +1,12 @@
 {
-  "enabled": true,
-  "slider": true,
-  "guide": "<h2>Please choose one type of verifications:</h2><p>1. Input the verification code from Telegram Group <strong>(valid for a week)</strong></p><p>2. Move the slider to the given number (valid for 2 hours)<p/><p>The reason of verification is in Telegram Group<p/>",
-  "code": "standwithukraine"
+  "guide": "<h2>Please choose one type of verifications:</h2><p>1. Input the verification code from Telegram Group <strong>(valid for a day)</strong></p><p>2. Move the slider to the given number (valid for 5 minutes)<p/><p>The reason of verification is in Telegram Group<p/>",
+  "slider": {
+    "enabled": true,
+    "validFor": 300000
+  },
+  "code": {
+    "enabled": true,
+    "validFor": 43200000,
+    "value": "standwithukraine"
+  }
 }

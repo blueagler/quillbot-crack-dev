@@ -50,7 +50,7 @@ export const message = {
     title: 'Quillbot Premium Crack need to verify that you\'re human',
     sliderTo: 'Move The Slider To Number: ',
     telegramBtn: 'Join Telegram Group',
-    input: 'Verification Code (Recommended: once unlock, free for a week)',
+    input: 'Verification Code',
     pass: 'Congratulations! You\'re human!',
     loadFail: 'Cannot Load Verify, please try again later',
   },

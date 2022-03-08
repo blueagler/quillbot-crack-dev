@@ -13,17 +13,17 @@ import Slider from '@mui/material/Slider';
 import Typography from '@mui/material/Typography';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setExpiredTime, getCode, getShowModel, getShowSlider, getGuide } from 'store/verify';
+import { setExpiredTime, getCode, getShowModel, getSlider, getGuide } from 'store/verify';
 
 export default memo(function () {
 
   const dispatch = useDispatch();
 
   const showModel = useSelector(getShowModel ?? false);
-  const showSlider = useSelector(getShowSlider ?? false);
   const guide = useSelector(getGuide ?? '');
 
-  const code = useSelector(getCode ?? 'code');
+  const code = useSelector(getCode);
+  const slider = useSelector(getSlider);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -46,15 +46,15 @@ export default memo(function () {
 
   const handleSliderChangeCommitted = useCallback((_, value) => {
     if (value === sliderAnswer) {
-      pass(2 * 60 * 60 * 1000)
+      pass(slider.validFor ?? 300000)
     } else {
       setSliderInput(0)
     }
   }, [sliderAnswer]);
 
   const handleInputChange = useCallback((event) => {
-    if (event.target.value === code) {
-      pass(7 * 24 * 60 * 60 * 1000)
+    if (event.target.value === code.value) {
+      pass(code.validFor ?? 43200000)
     }
     setCodeInput(event.target.value);
   }, [code]);
@@ -73,9 +73,12 @@ export default memo(function () {
       </DialogTitle>
       <DialogContent>
         <DialogContentText dangerouslySetInnerHTML={{ __html: guide }} />
-        <TextField label={message.verify.input} variant="outlined" color="success" size="large" fullWidth onChange={handleInputChange} value={codeInput} />
         {
-          showSlider &&
+          code.enabled &&
+          <TextField label={message.verify.input} variant="outlined" color="success" size="large" fullWidth onChange={handleInputChange} value={codeInput} />
+        }
+        {
+          slider.enabled &&
           <Fragment>
             <Slider
               disableSwap
@@ -92,7 +95,6 @@ export default memo(function () {
             <Typography>{message.verify.sliderTo + sliderAnswer.toString()}</Typography>
           </Fragment>
         }
-
       </DialogContent>
       <DialogActions>
         <Button fullWidth component="a" target="_blank" variant="contained" size="large" color="success" href="https://t.me/QuillBot_Premium_Crack">{message.verify.telegramBtn}</Button>

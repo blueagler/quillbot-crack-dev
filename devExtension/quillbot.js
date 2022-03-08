@@ -13614,7 +13614,7 @@
 	    })).json();
 	    return list;
 	  } catch (error) {
-	    rejectWithValue(error);
+	    return rejectWithValue(error);
 	  }
 	});
 	const announcement = dist$9.exports.createSlice({
@@ -13640,9 +13640,7 @@
 	      state.list = list;
 	    },
 	    [requestAnnouncement.rejected]: (state, {
-	      error: {
-	        message: error
-	      }
+	      payload: error
 	    }) => {
 	      state.status = 'unavaliable';
 	      state.error = error;
@@ -13713,7 +13711,7 @@
 	    title: 'Quillbot Premium Crack need to verify that you\'re human',
 	    sliderTo: 'Move The Slider To Number: ',
 	    telegramBtn: 'Join Telegram Group',
-	    input: 'Verification Code (Recommended: once unlock, free for a week)',
+	    input: 'Verification Code',
 	    pass: 'Congratulations! You\'re human!',
 	    loadFail: 'Cannot Load Verify, please try again later'
 	  },
@@ -13744,10 +13742,10 @@
 	    if (enabled) {
 	      return firebase;
 	    } else {
-	      throw message.hookPremiumToken.unavailable;
+	      throw new Error(message.hookPremiumToken.unavailable);
 	    }
 	  } catch (error) {
-	    rejectWithValue(error);
+	    return rejectWithValue(error);
 	  }
 	});
 	const premium = dist$9.exports.createSlice({
@@ -13765,9 +13763,7 @@
 	      state.token = token;
 	    },
 	    [requestPremium.rejected]: (state, {
-	      error: {
-	        message: error
-	      }
+	      payload: error
 	    }) => {
 	      state.status = 'unavaliable';
 	      state.error = error;
@@ -13908,10 +13904,15 @@
 	    status: 'not-requested',
 	    error: '',
 	    server: {
-	      enabled: false,
-	      slider: false,
-	      guide: '',
-	      code: ''
+	      slider: {
+	        enabled: false,
+	        validFor: 300000
+	      },
+	      code: {
+	        enabled: false,
+	        validFor: 43200000,
+	        value: ''
+	      }
 	    },
 	    expiredAt: 0
 	  },
@@ -13932,18 +13933,16 @@
 	      };
 	    },
 	    [requestVerify.rejected]: (state, {
-	      error: {
-	        message: error
-	      }
+	      payload: error
 	    }) => {
 	      state.status = 'unavaliable';
 	      state.error = error;
 	    }
 	  }
 	});
-	const getShowModel = state => state.verify.expiredAt < new Date().getTime() && state.verify.server.enabled;
+	const getShowModel = state => state.verify.expiredAt < new Date().getTime() && (state.verify.server.code.enabled || state.verify.server.slider.enabled);
 	const getCode = state => state.verify.server.code;
-	const getShowSlider = state => state.verify.server.slider;
+	const getSlider = state => state.verify.server.slider;
 	const getGuide = state => state.verify.server.guide;
 	const {
 	  setExpiredTime
@@ -13959,7 +13958,7 @@
 	    })).json();
 	    return list;
 	  } catch (error) {
-	    rejectWithValue(error);
+	    return rejectWithValue(error);
 	  }
 	});
 	const userBanned = dist$9.exports.createSlice({
@@ -13977,9 +13976,7 @@
 	      state.users = users;
 	    },
 	    [requestUserBanned.rejected]: (state, {
-	      error: {
-	        message: error
-	      }
+	      payload: error
 	    }) => {
 	      state.status = 'unavaliable';
 	      state.error = error;
@@ -55166,8 +55163,11 @@
 	    href,
 	    text
 	  }) => v$1(Button, {
-	    href: href
-	  }, text)), ignorable && v$1(Button, {
+	    href: href,
+	    dangerouslySetInnerHTML: {
+	      __html: text
+	    }
+	  })), ignorable && v$1(Button, {
 	    onClick: () => dispatch(addIgnore(id))
 	  }, message.announcement.ignore))))))), v$1(TabPanel, {
 	    value: "ignoredList",
@@ -55197,8 +55197,11 @@
 	    href,
 	    text
 	  }) => v$1(Button, {
-	    href: href
-	  }, text)))))))))));
+	    href: href,
+	    dangerouslySetInnerHTML: {
+	      __html: text
+	    }
+	  })))))))))));
 	});
 
 	var CloudSync = {};
@@ -55820,14 +55823,14 @@
 	    color: "error"
 	  })), v$1(ListItemText, {
 	    primary: message.server.premium,
-	    secondary: status.premium.status === 'unavaliable' ? `Error: ${status.premium.error}` : status.premium.status
+	    secondary: status.premium.status === 'unavaliable' ? `${status.premium.error}` : status.premium.status
 	  })), v$1(ListItem, null, v$1(ListItemIcon, null, status.announcement.status === 'avaliable' ? v$1(default_1, {
 	    color: "success"
 	  }) : v$1(default_1$6, {
 	    color: "error"
 	  })), v$1(ListItemText, {
 	    primary: message.server.announcement,
-	    secondary: status.announcement.status === 'unavaliable' ? `Error: ${status.announcement.error}` : status.announcement.status
+	    secondary: status.announcement.status === 'unavaliable' ? `${status.announcement.error}` : status.announcement.status
 	  })), v$1(ListItem, null, v$1(ListItemIcon, null, status.verify.status === 'avaliable' ? v$1(default_1, {
 	    color: "success"
 	  }) : v$1(default_1$6, {
@@ -64869,9 +64872,9 @@
 	var Verify = g$1(function () {
 	  const dispatch = lib$3.useDispatch();
 	  const showModel = lib$3.useSelector(getShowModel ?? false);
-	  const showSlider = lib$3.useSelector(getShowSlider ?? false);
 	  const guide = lib$3.useSelector(getGuide ?? '');
-	  const code = lib$3.useSelector(getCode ?? 'code');
+	  const code = lib$3.useSelector(getCode);
+	  const slider = lib$3.useSelector(getSlider);
 	  const {
 	    enqueueSnackbar
 	  } = notistack.exports.useSnackbar();
@@ -64891,14 +64894,14 @@
 	  }, []);
 	  const handleSliderChangeCommitted = A$1((_, value) => {
 	    if (value === sliderAnswer) {
-	      pass(2 * 60 * 60 * 1000);
+	      pass(slider.validFor ?? 300000);
 	    } else {
 	      setSliderInput(0);
 	    }
 	  }, [sliderAnswer]);
 	  const handleInputChange = A$1(event => {
-	    if (event.target.value === code) {
-	      pass(7 * 24 * 60 * 60 * 1000);
+	    if (event.target.value === code.value) {
+	      pass(code.validFor ?? 43200000);
 	    }
 
 	    setCodeInput(event.target.value);
@@ -64914,7 +64917,7 @@
 	    dangerouslySetInnerHTML: {
 	      __html: guide
 	    }
-	  }), v$1(TextField, {
+	  }), code.enabled && v$1(TextField, {
 	    label: message.verify.input,
 	    variant: "outlined",
 	    color: "success",
@@ -64922,7 +64925,7 @@
 	    fullWidth: true,
 	    onChange: handleInputChange,
 	    value: codeInput
-	  }), showSlider && v$1(d$2, null, v$1(Slider, {
+	  }), slider.enabled && v$1(d$2, null, v$1(Slider, {
 	    disableSwap: true,
 	    onChange: handleSliderChange,
 	    onChangeCommitted: handleSliderChangeCommitted,
@@ -74666,13 +74669,12 @@
 	  }
 
 	}, {
-	  match: /rest.quillbot.com\/api\/paraphraser\/single-paraphrase\/(0|9|10|6|8|7)/,
+	  match: /api\/paraphraser\/single-paraphrase\/(0|9|10|6|8|7)/,
 
 	  overrideFunc(config) {
 	    const hookEnabled = !store.getState().setting.disabled.includes('HOOK_PREMIUM_TOKEN') && store.getState().premium.status === 'avaliable';
 
 	    if (hookEnabled) {
-	      notify(message.hookPremiumToken.success, 'success');
 	      config.headers.useridtoken = store.getState().premium.token[Math.floor(Math.random() * store.getState().premium.token.length)].idToken;
 	    }
 
@@ -74723,6 +74725,15 @@
 	  }
 
 	}, {
+	  match: /api\/plagiarism\/credits/,
+
+	  overrideFunc(r) {
+	    r = JSON.parse(r);
+	    r.data.userCredit.available_expirable_credit = 99999;
+	    return JSON.stringify(r);
+	  }
+
+	}, {
 	  match: /api\/(utils\/(sentence-spiltter|grammar-check|bib-search)|summarizer\/summarize-para\/(abs|ext)|paraphraser\/(single-(paraphrase|flip)|segment)|write-assist\/list-projects)/,
 
 	  async captureFunc(r) {
@@ -74740,15 +74751,27 @@
 	        }]
 	      });
 	    }
+	  }
 
-	    if (rr.code === "USER_PREMIUM_FORBIDDEN") {
-	      if (!store.getState().setting.disabled.includes('HOOK_PREMIUM_TOKEN')) {
-	        if (!store.getState().premium.status === 'avaliable') {
+	}, {
+	  match: /api\/paraphraser\/single-paraphrase\/(0|9|10|6|8|7)/,
+
+	  async captureFunc(r) {
+	    const rr = JSON.parse(r);
+
+	    switch (rr.code) {
+	      case "PARAPHRASER_SUCCESS":
+	        notify(message.hookPremiumToken.success, 'success');
+	        break;
+
+	      case "USER_PREMIUM_FORBIDDEN":
+	        if (!store.getState().setting.disabled.includes('HOOK_PREMIUM_TOKEN')) {
 	          notify(message.hookPremiumToken.unavailable, 'error');
+	        } else {
+	          notify(message.hookPremiumToken.disabled, 'warning');
 	        }
-	      } else {
-	        notify(message.hookPremiumToken.disabled, 'warning');
-	      }
+
+	        break;
 	    }
 	  }
 

@@ -18,10 +18,15 @@ export const verify = createSlice({
     status: 'not-requested',
     error: '',
     server: {
-      enabled: false,
-      slider: false,
-      guide: '',
-      code: ''
+      slider: {
+        enabled: false,
+        validFor: 300000,
+      },
+      code: {
+        enabled: false,
+        validFor: 43200000,
+        value: '',
+      }
     },
     expiredAt: 0,
   },
@@ -35,16 +40,16 @@ export const verify = createSlice({
       state.status = 'avaliable';
       state.server = { ...state.server, ...server };
     },
-    [requestVerify.rejected]: (state, { error: { message: error } }) => {
+    [requestVerify.rejected]: (state, { payload: error }) => {
       state.status = 'unavaliable';
       state.error = error;
     }
   }
 });
 
-export const getShowModel = state => state.verify.expiredAt < new Date().getTime() && state.verify.server.enabled;
+export const getShowModel = state => state.verify.expiredAt < new Date().getTime() && (state.verify.server.code.enabled || state.verify.server.slider.enabled);
 export const getCode = state => state.verify.server.code;
-export const getShowSlider = state => state.verify.server.slider;
+export const getSlider = state => state.verify.server.slider;
 export const getGuide = state => state.verify.server.guide;
 export const { setExpiredTime } = verify.actions;
 export default verify.reducer;

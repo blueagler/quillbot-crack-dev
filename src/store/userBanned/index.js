@@ -7,7 +7,7 @@ export const requestUserBanned = createAsyncThunk(
       const list = await (await fetch('https://nocache.blueagle.top/quillbot/userBanned.json', { cache: "no-cache" })).json();
       return list
     } catch (error) {
-      rejectWithValue(error)
+      return rejectWithValue(error)
     }
   }
 );
@@ -24,7 +24,7 @@ export const userBanned = createSlice({
       state.status = 'avaliable';
       state.users = users;
     },
-    [requestUserBanned.rejected]: (state, { error: { message: error } }) => {
+    [requestUserBanned.rejected]: (state, { payload: error }) => {
       state.status = 'unavaliable';
       state.error = error;
     }

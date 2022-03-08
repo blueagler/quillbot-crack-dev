@@ -95,7 +95,7 @@ export default memo(function () {
                       </CardContent>
                       <CardActions>
                         {
-                          links.length > 0 && links.map(({ href, text }) => <Button href={href}>{text}</Button>)
+                          links.length > 0 && links.map(({ href, text }) => <Button href={href} dangerouslySetInnerHTML={{ __html: text }} />)
                         }
                         {
                           ignorable && <Button onClick={() => dispatch(addIgnore(id))}>{message.announcement.ignore}</Button>
@@ -123,7 +123,7 @@ export default memo(function () {
                       </CardContent>
                       <CardActions>
                         {
-                          links.length > 0 && links.map(({ href, text }) => <Button href={href}>{text}</Button>)
+                          links.length > 0 && links.map(({ href, text }) => <Button href={href} dangerouslySetInnerHTML={{ __html: text }} />)
                         }
                       </CardActions>
                     </Card>

@@ -7,7 +7,7 @@ export const requestAnnouncement = createAsyncThunk(
       const list = await (await fetch('https://nocache.blueagle.top/quillbot/announcement.json', { cache: "no-cache" })).json();
       return list
     } catch (error) {
-      rejectWithValue(error)
+      return rejectWithValue(error)
     }
   }
 )
@@ -30,7 +30,7 @@ export const announcement = createSlice({
       state.status = 'avaliable';
       state.list = list;
     },
-    [requestAnnouncement.rejected]: (state, { error: { message: error } }) => {
+    [requestAnnouncement.rejected]: (state, { payload: error }) => {
       state.status = 'unavaliable';
       state.error = error;
     }

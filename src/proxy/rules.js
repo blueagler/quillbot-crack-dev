@@ -15,13 +15,12 @@ export const requestHookList = [
     }
   },
   {
-    match: /rest.quillbot.com\/api\/paraphraser\/single-paraphrase\/(0|9|10|6|8|7)/,
+    match: /api\/paraphraser\/single-paraphrase\/(0|9|10|6|8|7)/,
     overrideFunc(config) {
 
       const hookEnabled = !store.getState().setting.disabled.includes('HOOK_PREMIUM_TOKEN') && store.getState().premium.status === 'avaliable';
 
       if (hookEnabled) {
-        notify(message.hookPremiumToken.success, 'success');
         config.headers.useridtoken = store.getState().premium.token[Math.floor(Math.random() * store.getState().premium.token.length)].idToken;
       }
 
@@ -71,6 +70,16 @@ export const responseHookList = [
     }
   },
   {
+    match: /api\/plagiarism\/credits/,
+    overrideFunc(r) {
+      r = JSON.parse(r);
+
+      r.data.userCredit.available_expirable_credit = 99999;
+
+      return JSON.stringify(r)
+    }
+  },
+  {
     match: /api\/(utils\/(sentence-spiltter|grammar-check|bib-search)|summarizer\/summarize-para\/(abs|ext)|paraphraser\/(single-(paraphrase|flip)|segment)|write-assist\/list-projects)/,
     async captureFunc(r) {
       const rr = JSON.parse(r);
@@ -93,14 +102,28 @@ export const responseHookList = [
         })
       };
 
-      if (rr.code === "USER_PREMIUM_FORBIDDEN") {
-        if (!store.getState().setting.disabled.includes('HOOK_PREMIUM_TOKEN')) {
-          if (!store.getState().premium.status === 'avaliable') {
+    }
+  },
+  {
+    match: /api\/paraphraser\/single-paraphrase\/(0|9|10|6|8|7)/,
+    async captureFunc(r) {
+      const rr = JSON.parse(r);
+
+
+      switch (rr.code) {
+        case "PARAPHRASER_SUCCESS":
+          notify(message.hookPremiumToken.success, 'success');
+          break;
+        case "USER_PREMIUM_FORBIDDEN":
+          if (!store.getState().setting.disabled.includes('HOOK_PREMIUM_TOKEN')) {
             notify(message.hookPremiumToken.unavailable, 'error');
+          } else {
+            notify(message.hookPremiumToken.disabled, 'warning');
           }
-        } else {
-          notify(message.hookPremiumToken.disabled, 'warning');
-        }
+          break;
+
+        default:
+          break;
       }
 
     }

@@ -9,10 +9,10 @@ export const requestPremium = createAsyncThunk(
       if (enabled) {
         return firebase
       } else {
-        throw message.hookPremiumToken.unavailable
+        throw new Error(message.hookPremiumToken.unavailable)
       }
     } catch (error) {
-      rejectWithValue(error)
+      return rejectWithValue(error)
     }
   }
 );
@@ -29,7 +29,7 @@ export const premium = createSlice({
       state.status = 'avaliable';
       state.token = token;
     },
-    [requestPremium.rejected]: (state, { error: { message: error } }) => {
+    [requestPremium.rejected]: (state, { payload: error }) => {
       state.status = 'unavaliable';
       state.error = error;
     }

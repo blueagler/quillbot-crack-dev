@@ -11,13 +11,13 @@ export const setting = createSlice({
       },
       {
         id: 'HOOK_PREMIUM_TOKEN',
-        label: 'Unlock Paraphrase Modes (Testing)',
-        description: 'Allow you to use premium paraphrase modes',
+        label: 'Unlock Paraphrase Modes',
+        description: 'Allow you to use premium paraphrase modes (Sometimes it may not work)',
       },
       {
         id: 'FULL_EDITOR',
         label: 'Full Editor',
-        description: 'Full Editor',
+        description: 'Enlarge the editor view',
       },
     ],
     disabled: [],

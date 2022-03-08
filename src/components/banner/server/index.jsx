@@ -55,13 +55,13 @@ export default memo(function () {
             <ListItemIcon>
               {status.premium.status === 'avaliable' ? <DoneIcon color='success' /> : <CloseIcon color='error' />}
             </ListItemIcon>
-            <ListItemText primary={message.server.premium} secondary={status.premium.status === 'unavaliable' ? `Error: ${status.premium.error}` : status.premium.status} />
+            <ListItemText primary={message.server.premium} secondary={status.premium.status === 'unavaliable' ? `${status.premium.error}` : status.premium.status} />
           </ListItem>
           <ListItem>
             <ListItemIcon>
               {status.announcement.status === 'avaliable' ? <DoneIcon color='success' /> : <CloseIcon color='error' />}
             </ListItemIcon>
-            <ListItemText primary={message.server.announcement} secondary={status.announcement.status === 'unavaliable' ? `Error: ${status.announcement.error}` : status.announcement.status} />
+            <ListItemText primary={message.server.announcement} secondary={status.announcement.status === 'unavaliable' ? `${status.announcement.error}` : status.announcement.status} />
           </ListItem>
           <ListItem>
             <ListItemIcon>
